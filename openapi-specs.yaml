@@ -1,0 +1,1920 @@
+openapi: "3.0.1"
+info:
+  title: "LearnHUB API"
+  description: "This is an API for LearnHUB system."
+  version: "1.0.0"
+  contact:
+    email: "learnhubdev@gmail.com"
+servers:
+  # id is subject to change
+  - url: "https://{domain}/{stage}"
+    variables:
+      id:
+        default: "test_domain"
+      stage:
+        default: "dev"
+tags:
+  - name: user
+    description: "Operations that involve users"
+  - name: achievement
+    description: "Operations that involve achievements"
+  - name: program
+    description: "Operations that involve study programs"
+  - name: transaction
+    description: "Operations that involve transaction"
+  - name: auth
+    description: "Operations that involve user's authentication"
+paths:
+  /users/students:
+    get:
+      tags:
+        - user
+      summary: List all students basic information.
+      description: |
+        For retrieving multiple students's profile.
+      operationId: listStudents
+      responses:
+        "200":
+          description: "OK: List students."
+          content:
+            application/json:
+              schema:
+                required:
+                  - students
+                properties:
+                  students:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/student"
+  /users/students/{student_id}:
+    get:
+      tags:
+        - user
+      summary: Get specific student's basic information.
+      description: |
+        For retrieving a student's profile.
+      operationId: getStudent
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      responses:
+        "200":
+          description: "OK: Get student."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/student"
+    patch:
+      tags:
+        - user
+      summary: Edit specific student's basic information.
+      description: |
+        For editing a student's profile.
+      operationId: patchStudent
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      requestBody:
+        description: Student profile edit
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "paff"
+                fullname:
+                  type: string
+                  example: "foo bar"
+                profile_pic:
+                  type: string
+                  example: "https://example-pic.png"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - user
+      summary: Delete specific student's account.
+      description: |
+        For removing a student's account.
+      operationId: deleteStudent
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /users/students/{student_id}/achievements:
+    get:
+      tags:
+        - user
+      summary: List student's achievements.
+      description: For retrieving specific student's achievements.
+      operationId: listStudentAchievements
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      responses:
+        "200":
+          description: "OK: List student's achievements."
+          content:
+            application/json:
+              schema:
+                required:
+                  - achievements
+                properties:
+                  achievements:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/studentAchievement"
+  /users/students/{student_id}/programs:
+    get:
+      tags:
+        - user
+      summary: List student's programs.
+      description: For retrieving specific student's programs.
+      operationId: listStudentPrograms
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      responses:
+        "200":
+          description: "OK: List student's programs."
+          content:
+            application/json:
+              schema:
+                required:
+                  - courses
+                  - classes
+                properties:
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userCourse"
+                  classes:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userClass"
+  /users/students/{student_id}/programs/classes:
+    get:
+      tags:
+        - user
+      summary: List student's classes.
+      description: For retrieving specific student's classes.
+      operationId: listStudentClasses
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      responses:
+        "200":
+          description: "OK: List student's classes."
+          content:
+            application/json:
+              schema:
+                required:
+                  - classes
+                properties:
+                  classes:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userClass"
+  /users/students/{student_id}/programs/courses:
+    get:
+      tags:
+        - user
+      summary: List student's courses.
+      description: |
+        For retrieving specific student's courses.
+      operationId: listStudentCourses
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      responses:
+        "200":
+          description: "OK: List student's courses."
+          content:
+            application/json:
+              schema:
+                required:
+                  - courses
+                properties:
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userCourse"
+  /users/students/{student_id}/wishlist:
+    get:
+      tags:
+        - user
+      summary: List student's wishlist items.
+      description: |
+        For retrieving specific student's wishlist items.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: listStudentWishlist
+      responses:
+        "200":
+          description: "OK: List student's wishlist"
+          content:
+            application/json:
+              schema:
+                required:
+                  - wishlist
+                properties:
+                  wishlist:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/studentWishlistItem"
+    post:
+      tags:
+        - user
+      summary: Add a student's wishlist item.
+      description: |
+        For adding specific student's wishlist item.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: postStudentWishlist
+      requestBody:
+        description: Class or Course to add to wishlist.
+        required: true
+        content:
+          application/json:
+            schema:
+              minItems: 2
+              maxItems: 2
+              required:
+                - type
+              properties:
+                type:
+                  type: string
+                  example: "class"
+                class_id:
+                  type: string
+                  example: "1234"
+                course_id:
+                  type: string
+                  example: "1234"
+      responses:
+        "200":
+          description: "OK: Add student's wishlist item"
+          content:
+            application/json:
+              schema:
+                required:
+                  - wishlist-item-id
+                properties:
+                  wishlist-item-id:
+                    type: string
+                    example: "1234"
+  /users/students/{student_id}/wishlist/{wishlist_item_id}:
+    get:
+      tags:
+        - user
+      summary: Get student's specific wishlist item.
+      description: |
+        For retrieving a student's wishlist item.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/wishlistItemID"
+      operationId: getStudentWishlistItem
+      responses:
+        "200":
+          description: "OK: Get a student's wishlist item"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentWishlistItem"
+    delete:
+      tags:
+        - user
+      summary: Delete student's specific wishlist item.
+      description: |
+        For removing student's wishlist item.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/wishlistItemID"
+      operationId: deleteStudentWishlistItem
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /users/students/{student_id}/config:
+    get:
+      tags:
+        - user
+      summary: Get student's config.
+      description: |
+        For retrieving a student's config.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: getStudentConfig
+      responses:
+        "200":
+          description: "OK: Get a student's config"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userConfig"
+    patch:
+      tags:
+        - user
+      summary: Patch student's config.
+      description: |
+        For editing a student's config.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: patchStudentConfig
+      requestBody:
+        description: student config edit
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userConfig"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /users/students/{student_id}/payment-methods:
+    get:
+      tags:
+        - user
+      summary: List student's payment methods.
+      description: |
+        For retrieving a student's payment methods.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: listStudentPaymentMethods
+      responses:
+        "200":
+          description: "OK: List student's payment methods"
+          content:
+            application/json:
+              schema:
+                properties:
+                  payment_methods:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userPaymentMethod"
+    post:
+      tags:
+        - user
+      summary: Add  a student's payment method.
+      description: |
+        For adding a student's payment method.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: postStudentPaymentMethod
+      requestBody:
+        description: User's payment method details
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - type
+                - card_number
+                - cvc
+                - expiration_date
+                - holder_fullname
+              properties:
+                name:
+                  type: string
+                  example: "my-kbank-debit"
+                type:
+                  type: string
+                  example: "kbank_debit"
+                card_number:
+                  type: integer
+                  example: 12121313
+                cvc:
+                  type: integer
+                  example: 232
+                expiration_date:
+                  type: string
+                  example: "08/25"
+                holder_fullname:
+                  type: string
+                  example: "foo bar"
+      responses:
+        "200":
+          description: "OK: Add student's payment methods"
+          content:
+            application/json:
+              schema:
+                properties:
+                  payment_method_id:
+                    type: string
+                    example: "1234"
+  /users/students/{student_id}/payment-methods/{payment_method_id}:
+    get:
+      tags:
+        - user
+      summary: Get student's payment method.
+      description: |
+        For retrieving a student's payment method.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/paymentMethodID"
+      operationId: getStudentPaymentMethod
+      responses:
+        "200":
+          description: "OK: Get student's specific payment method"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userPaymentMethod"
+    patch:
+      tags:
+        - user
+      summary: Edit student's payment method.
+      description: |
+        For editing a student's payment method.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/paymentMethodID"
+      operationId: patchStudentPaymentMethod
+      requestBody:
+        description: User's payment method details to edit
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - type
+                - card_number
+                - cvc
+                - expiration_date
+                - holder_fullname
+              properties:
+                name:
+                  type: string
+                  example: "my-kbank-debit"
+                type:
+                  type: string
+                  example: "kbank_debit"
+                card_number:
+                  type: integer
+                  example: 12121313
+                cvc:
+                  type: integer
+                  example: 232
+                expiration_date:
+                  type: string
+                  example: "08/25"
+                holder_fullname:
+                  type: string
+                  example: "foo bar"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - user
+      summary: Delete student's payment method.
+      description: |
+        For deleting a student's payment method.
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/paymentMethodID"
+      operationId: deleteStudentPaymentMethod
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /users/students/{student_id}/purchases-history:
+    get:
+      tags:
+        - user
+      summary: Get student's purchases-history
+      description: |
+        For retrieving student's purchases-history
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: getStudentPurchasesHistory
+      responses:
+        "200":
+          description: "OK: Get student's purchases history"
+          content:
+            application/json:
+              schema:
+                properties:
+                  purchases_history:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/studentPurchasesHistoryItem"
+  /users/student/{student_id}/basket:
+    get:
+      tags:
+        - user
+      summary: Get student's basket
+      description: |
+        For retrieving student's basket
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: getStudentBasket
+      responses:
+        "200":
+          description: "OK: Get student's basket"
+          content:
+            application/json:
+              schema:
+                properties:
+                  basket:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/studentBasketItem"
+    post:
+      tags:
+        - user
+      summary: Add student's basket item
+      description: |
+        For adding a student's basket item
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+      operationId: addStudentBasketItem
+      requestBody:
+        description: Student's basket item details
+        required: true
+        content:
+          application/json:
+            schema:
+              minItems: 2
+              maxItems: 2
+              required:
+                - type
+              properties:
+                type:
+                  type: string
+                  example: "class"
+                class_id:
+                  type: string
+                  example: "1234"
+                course_id:
+                  type: string
+                  example: "1234"
+      responses:
+        "200":
+          description: "OK: Add student basket item"
+          content:
+            application/json:
+              schema:
+                properties:
+                  basket_item_id:
+                    type: string
+                    example: "1234"
+  /users/student/{student_id}/basket/{basket_item_id}:
+    get:
+      tags:
+        - user
+      summary: Get student's basket item
+      description: |
+        For retrieving student's basket item
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/basketItemID"
+      operationId: getStudentBasketItem
+      responses:
+        "200":
+          description: "OK: Get student's basket item"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentBasketItem"
+    delete:
+      tags:
+        - user
+      summary: Delete student's basket item
+      description: |
+        For deleting student's basket item
+      parameters:
+        - $ref: "#/components/parameters/studentID"
+        - $ref: "#/components/parameters/basketItemID"
+      operationId: deleteStudentBasketItem
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /users/teachers:
+    get:
+      tags:
+        - user
+      summary: List all teachers basic information.
+      description: |
+        For retrieving multiple teacher's profile.
+      operationId: listTeachers
+      responses:
+        "200":
+          description: "OK: List teachers."
+          content:
+            application/json:
+              schema:
+                required:
+                  - teachers
+                properties:
+                  teachers:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/teacher"
+  /users/teachers/{teacher_id}/programs:
+    get:
+      tags:
+        - user
+      summary: List teacher's programs.
+      description: For retrieving specific teacher's programs.
+      operationId: listTeacherPrograms
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      responses:
+        "200":
+          description: "OK: List teacher's programs."
+          content:
+            application/json:
+              schema:
+                required:
+                  - courses
+                  - classes
+                properties:
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userCourse"
+                  classes:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userClass"
+  /users/teachers/{teacher_id}/programs/classes:
+    get:
+      tags:
+        - user
+      summary: List teacher's classes.
+      description: For retrieving specific teacher's classes.
+      operationId: listTeacherClasses
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      responses:
+        "200":
+          description: "OK: List teacher's classes."
+          content:
+            application/json:
+              schema:
+                required:
+                  - classes
+                properties:
+                  classes:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userClass"
+  /users/teachers/{teacher_id}/programs/courses:
+    get:
+      tags:
+        - user
+      summary: List teacher's courses.
+      description: |
+        For retrieving specific teacher's courses.
+      operationId: listTeacherCourses
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      responses:
+        "200":
+          description: "OK: List teacher's courses."
+          content:
+            application/json:
+              schema:
+                required:
+                  - courses
+                properties:
+                  courses:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userCourse"
+  /users/teachers/{teacher_id}/config:
+    get:
+      tags:
+        - user
+      summary: Get teacher's config.
+      description: |
+        For retrieving a teacher's config.
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      operationId: getTeacherConfig
+      responses:
+        "200":
+          description: "OK: Get a teacher's config"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userConfig"
+    patch:
+      tags:
+        - user
+      summary: Patch teacher's config.
+      description: |
+        For editing a teacher's config.
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      operationId: patchTeacherConfig
+      requestBody:
+        description: teacher config edit
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userConfig"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /users/teachers/{teacher_id}/payment-methods:
+    get:
+      tags:
+        - user
+      summary: List teacher's payment methods.
+      description: |
+        For retrieving a teacher's payment methods.
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      operationId: listTeacherPaymentMethods
+      responses:
+        "200":
+          description: "OK: List teacher's payment methods"
+          content:
+            application/json:
+              schema:
+                properties:
+                  payment_methods:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/userPaymentMethod"
+    post:
+      tags:
+        - user
+      summary: Add  a teacher's payment method.
+      description: |
+        For adding a teacher's payment method.
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      operationId: postTeacherPaymentMethod
+      requestBody:
+        description: User's payment method details
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - type
+                - card_number
+                - cvc
+                - expiration_date
+                - holder_fullname
+              properties:
+                name:
+                  type: string
+                  example: "my-kbank-debit"
+                type:
+                  type: string
+                  example: "kbank_debit"
+                card_number:
+                  type: integer
+                  example: 12121313
+                cvc:
+                  type: integer
+                  example: 232
+                expiration_date:
+                  type: string
+                  example: "08/25"
+                holder_fullname:
+                  type: string
+                  example: "foo bar"
+      responses:
+        "200":
+          description: "OK: Add teacher's payment methods"
+          content:
+            application/json:
+              schema:
+                properties:
+                  payment_method_id:
+                    type: string
+                    example: "1234"
+  /users/teachers/{teacher_id}/payment-methods/{payment_method_id}:
+    get:
+      tags:
+        - user
+      summary: Get teacher's payment method.
+      description: |
+        For retrieving a teacher's payment method.
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+        - $ref: "#/components/parameters/paymentMethodID"
+      operationId: getTeacherPaymentMethod
+      responses:
+        "200":
+          description: "OK: Get teacher's specific payment method"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userPaymentMethod"
+    patch:
+      tags:
+        - user
+      summary: Edit teacher's payment method.
+      description: |
+        For editing a teacher's payment method.
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+        - $ref: "#/components/parameters/paymentMethodID"
+      operationId: patchTeacherPaymentMethod
+      requestBody:
+        description: User's payment method details to edit
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - type
+                - card_number
+                - cvc
+                - expiration_date
+                - holder_fullname
+              properties:
+                name:
+                  type: string
+                  example: "my-kbank-debit"
+                type:
+                  type: string
+                  example: "kbank_debit"
+                card_number:
+                  type: integer
+                  example: 12121313
+                cvc:
+                  type: integer
+                  example: 232
+                expiration_date:
+                  type: string
+                  example: "08/25"
+                holder_fullname:
+                  type: string
+                  example: "foo bar"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - user
+      summary: Delete teacher's payment method.
+      description: |
+        For deleting a teacher's payment method.
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+        - $ref: "#/components/parameters/paymentMethodID"
+      operationId: deleteTeacherPaymentMethod
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /programs:
+    get:
+      tags:
+        - program
+      summary: List programs.
+      description: |
+        For listing's programs.
+      operationId: listPrograms
+      responses:
+        "200":
+          description: "OK: List all programs"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/programs"
+  /programs/courses:
+    get:
+      tags:
+        - program
+      summary: List courses.
+      description: |
+        For listing's courses.
+      operationId: listCourses
+      responses:
+        "200":
+          description: "OK: List all courses"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/courses"
+    post:
+      tags:
+        - program
+      summary: Post courses.
+      description: |
+        For adding's course.
+      operationId: postCourse
+      requestBody:
+        description: Course to add.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  example: "basic course"
+                course_pic:
+                  type: string
+                  example: "https://example-pic.com"
+                description:
+                  type: string
+                  example: "A basic course"
+                quick_description:
+                  type: string
+                  example: "A basic course"
+                price:
+                  type: number
+                  example: 100
+      responses:
+        "200":
+          description: "OK: Add course"
+          content:
+            application/json:
+              schema:
+                required:
+                  - course_id
+                properties:
+                  course_id:
+                    type: string
+                    example: "1234"
+  /programs/courses/{course_id}:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - program
+      summary: Get course.
+      description: |
+        For retrieving course.
+      operationId: getCourse
+      responses:
+        "200":
+          description: "OK: Get course"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/course"
+    patch:
+      tags:
+        - program
+      summary: Edit course.
+      description: |
+        For editing course.
+      operationId: patchCourse
+      requestBody:
+        description: Course details to edit.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  example: "basic course"
+                course_pic:
+                  type: string
+                  example: "https://example-pic.com"
+                description:
+                  type: string
+                  example: "A basic course"
+                quick_description:
+                  type: string
+                  example: "A basic course"
+                price:
+                  type: number
+                  example: 100
+      responses:
+        "200":
+          description: "OK: Edit course"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - program
+      summary: Delete specific course.
+      description: |
+        For removing a course.
+      operationId: deleteCourse
+      parameters:
+        - $ref: "#/components/parameters/courseID"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /programs/courses/{course_id}/students:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - program
+      summary: List course's students.
+      description: |
+        For listing course's students.
+      operationId: listCourseStudents
+      responses:
+        "200":
+          description: "OK: List course's students"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/course_students"
+  /programs/courses/{course_id}/chapters:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - program
+      summary: List course's chapters.
+      description: |
+        For listing course's chapters.
+      operationId: listCourseChapters
+      responses:
+        "200":
+          description: "OK: List course's chapters"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/chapters"
+    post:
+      tags:
+        - program
+      summary: Add course's chapter.
+      description: |
+        For adding a course's chapter.
+      operationId: postCourseChapter
+      requestBody:
+        description: Chapter to add to course.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - type
+              properties:
+                chapter_num:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "first chapter"
+                description:
+                  type: string
+                  example: "good chapter"
+      responses:
+        "200":
+          description: "OK: Add course's chapter"
+          content:
+            application/json:
+              schema:
+                required:
+                  - chapter_id
+                properties:
+                  chapter_id:
+                    type: string
+                    example: "1234"
+  /programs/courses/{course_id}/chapters/{chapter_id}:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+      - $ref: "#/components/parameters/chapterID"
+    get:
+      tags:
+        - program
+      summary: Get a course's chapter.
+      description: |
+        For retrieving a course's chapter.
+      operationId: getCourseChapter
+      responses:
+        "200":
+          description: "OK: Get a course's chapter"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/chapter"
+    patch:
+      tags:
+        - program
+      summary: Edit course's chapter.
+      description: |
+        For editing a course's chapter.
+      operationId: patchCourseChapter
+      requestBody:
+        description: Chapter to edit.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - type
+              properties:
+                chapter_num:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "first chapter"
+                description:
+                  type: string
+                  example: "good chapter"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - program
+      summary: Delete specific course's chapter.
+      description: |
+        For removing a course's chapter.
+      operationId: deleteChapter
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /programs/courses/{course_id}/chapters/{chapter_id}/lessons:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+      - $ref: "#/components/parameters/chapterID"
+    get:
+      tags:
+        - program
+      summary: List course's lessons.
+      description: |
+        For listing a course's lessons.
+      operationId: listCourseLessons
+      responses:
+        "200":
+          description: "OK: List course's lessons"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/lessons"
+    post:
+      tags:
+        - program
+      summary: Add course's lesson.
+      description: |
+        For adding a course's lesson.
+      operationId: postCourseLesson
+      requestBody:
+        description: Lesson to add to course.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - type
+              properties:
+                name:
+                  type: string
+                  example: "first lesson"
+                description:
+                  type: string
+                  example: "Good lesson"
+                src:
+                  type: string
+                  example: "https://example-video.mp4"
+      responses:
+        "200":
+          description: "OK: Add course's lesson"
+          content:
+            application/json:
+              schema:
+                required:
+                  - lesson_id
+                properties:
+                  lesson_id:
+                    type: string
+                    example: "1234"
+  /programs/courses/{course_id}/chapters/{chapter_id}/lessons/{lesson_id}:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+      - $ref: "#/components/parameters/chapterID"
+      - $ref: "#/components/parameters/lessonID"
+    get:
+      tags:
+        - program
+      summary: Get a course's lesson.
+      description: |
+        For retrieving a course's lesson.
+      operationId: getCourseLesson
+      responses:
+        "200":
+          description: "OK: Get a course's lesson"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/lesson"
+    patch:
+      tags:
+        - program
+      summary: Edit specific lesson.
+      description: |
+        For editing a lesson.
+      operationId: patchLesson
+      requestBody:
+        description: Lesson's fields to edit
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "first lesson"
+                src:
+                  type: string
+                  example: "https://example-video.mp4"
+                description:
+                  type: string
+                  example: "Good lesson"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - program
+      summary: Delete a specific lesson.
+      description: |
+        For removing a lesson.
+      operationId: deleteLesson
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+  /programs/courses/{course_id}/announcements:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - program
+      summary: List course's announcements.
+      description: |
+        For listing course's announcements.
+      operationId: listCourseAnnoucements
+      responses:
+        "200":
+          description: "OK: List course's announcements"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/announcements"
+    post:
+      tags:
+        - program
+      summary: Add course's announcement.
+      description: |
+        For adding a course's announcement.
+      operationId: postCourseAnnouncement
+      requestBody:
+        description: Announcement to add to course.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - type
+              properties:
+                announcement_id:
+                  type: string
+                  example: "1234"
+                text:
+                  type: string
+                  example: "hello students`"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      attachment_type:
+                        type: string
+                        example: "image"
+                      src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          description: "OK: Add course's announcement"
+          content:
+            application/json:
+              schema:
+                required:
+                  - announcement_id
+                properties:
+                  announcement_id:
+                    type: string
+                    example: "1234"
+  /programs/courses/{course_id}/announcements/{announcement_id}:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+      - $ref: "#/components/parameters/announcementID"
+    get:
+      tags:
+        - program
+      summary: Get a course's announcement.
+      description: |
+        For retrieving a course's announcement.
+      operationId: getCourseAnnoucement
+      responses:
+        "200":
+          description: "OK: List a course's lesson"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/announcement"
+    patch:
+      tags:
+        - program
+      summary: Edit specific announcement.
+      description: |
+        For editing a announcement.
+      operationId: patchAnnoucement
+      requestBody:
+        description: Announcement's fields to edit
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: "hello students`"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      attachment_type:
+                        type: string
+                        example: "image"
+                      src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - program
+      summary: Delete a specific announcement.
+      description: |
+        For removing an announcement.
+      operationId: deleteAnnouncement
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+components:
+  responses:
+    OK:
+      description: Server return 200 OK response.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseScheme"
+          example:
+            code: 200
+            message: "OK"
+
+    InternalServerError:
+      description: Server encounter unexpected errors.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseScheme"
+          example:
+            code: 500
+            message: "Internal Server Error"
+    Unauthorized:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseScheme"
+          example:
+            code: 401
+            message: "Unauthorized"
+    NotFound:
+      description: The specified resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/responseScheme"
+          example:
+            code: 404
+            message: "Not Found"
+
+  schemas:
+    responseScheme:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: number
+          example: 400
+        message:
+          type: string
+          example: "Internal Server Error"
+
+    # USER SCHEMAS
+    userCourse:
+      type: object
+      required:
+        - course_id
+        - name
+      properties:
+        course_id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "Advanced redstone weaponry"
+    userClass:
+      type: object
+      required:
+        - class_id
+        - name
+      properties:
+        class_id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "Basic dropper mechanic"
+    userConfig:
+      type: object
+      required:
+        - theme
+      properties:
+        theme:
+          type: string
+          example: "light"
+    userPaymentMethod:
+      type: object
+      required:
+        - payment_method_id
+        - name
+        - type
+        - card_number
+        - cvc
+        - expiration_date
+        - holder_fullname
+      properties:
+        payment_method_id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "my-kbank-debit"
+        type:
+          type: string
+          example: "kbank_debit"
+        card_number:
+          type: integer
+          example: 12121313
+        cvc:
+          type: integer
+          example: 232
+        expiration_date:
+          type: string
+          example: "08/25"
+        holder_fullname:
+          type: string
+          example: "foo bar"
+
+    student:
+      type: object
+      required:
+        - student_id
+        - username
+        - email
+        - fullname
+        - profile_pic
+      properties:
+        student_id:
+          type: string
+          example: "123456789"
+        username:
+          type: string
+          example: "foo-bar"
+        email:
+          type: string
+          example: "example@example.com"
+        fullname:
+          type: string
+          example: "foo bar"
+        profile_pic:
+          type: string
+          example: "https://example/pic.png"
+    studentAchievement:
+      type: object
+      required:
+        - achievement_id
+        - name
+        - description
+        - achievement_pic
+      properties:
+        achievement_id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "Classes Collector"
+        description:
+          type: string
+          example: "Own 10 different classes."
+        achievement_pic:
+          type: string
+          example: "https://example/image.png"
+    studentWishlistItem:
+      type: object
+      minItems: 4
+      maxItems: 4
+      required:
+        - name
+        - type
+        - price
+      properties:
+        wishlist_item_id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "discreet math"
+        type:
+          type: string
+          example: "class"
+        class_id:
+          type: string
+          example: "123"
+        course_id:
+          type: string
+          example: "123"
+        price:
+          type: number
+          example: 1200.2
+    studentPurchasesHistoryItem:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "class"
+        class_id:
+          type: string
+          example: "1234"
+        course_id:
+          type: string
+          example: "1234"
+        price:
+          type: number
+          example: 1200
+        name:
+          type: string
+          example: "Intro to physics"
+    studentBasketItem:
+      type: object
+      minItems: 4
+      maxItems: 4
+      required:
+        - name
+        - type
+        - price
+      properties:
+        basket_item_id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "discreet math"
+        type:
+          type: string
+          example: "class"
+        class_id:
+          type: string
+          example: "123"
+        course_id:
+          type: string
+          example: "123"
+        price:
+          type: number
+          example: 1200.2
+
+    teacher:
+      type: object
+      required:
+        - teacher_id
+        - username
+        - email
+        - fullname
+        - profile_pic
+      properties:
+        teacher_id:
+          type: string
+          example: "123456789"
+        username:
+          type: string
+          example: "foo-bar"
+        email:
+          type: string
+          example: "example@example.com"
+        fullname:
+          type: string
+          example: "foo bar"
+        profile_pic:
+          type: string
+          example: "https://example/pic.png"
+
+    # PROGRAMS SCHEMAS
+    programs:
+      type: object
+      description: Multiple programs info.
+      properties:
+        programs:
+          type: array
+          items:
+            type: object
+            properties:
+              course_id:
+                type: string
+                example: "123456789"
+              class_id:
+                type: string
+                example: "123456789"
+              type:
+                type: string
+                example: "course"
+              name:
+                type: string
+                example: "basic course"
+    courses:
+      type: object
+      description: Multiple courses info.
+      properties:
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              course_id:
+                type: string
+                example: "123456789"
+              name:
+                type: string
+                example: "basic course"
+              teacher:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12345"
+              rating:
+                type: number
+                example: 3.5
+              reviewers:
+                type: integer
+                example: 300
+              price:
+                type: number
+                example: 3.5
+              course_pic:
+                type: string
+                example: "https://example-pic.com"
+              progress:
+                type: integer
+                example: 100
+    course:
+      type: object
+      description: A course info
+      properties:
+        course_id:
+          type: string
+          example: "1235567"
+        name:
+          type: string
+          example: "basic redstone course"
+        course_pic:
+          type: string
+          example: "https://example-pic.com"
+        description:
+          type: string
+          example: "Redstone course"
+        quick_description:
+          type: string
+          example: "A basic course"
+        rating:
+          type: number
+          example: 3.5
+        reviewers:
+          type: integer
+          example: 300
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+        price:
+          type: number
+          example: 100
+        total_video_length:
+          type: integer
+          example: 10000000
+        total_chapters:
+          type: integer
+          example: 10
+        total_exercise:
+          type: integer
+          example: 10
+        total_files:
+          type: integer
+          example: 10
+        progress:
+          type: integer
+          example: 100
+    course_students:
+      type: array
+      items:
+        type: object
+        properties:
+          student_id:
+            type: string
+            example: "1234567"
+          name:
+            type: string
+            example: "paff"
+    chapters:
+      type: array
+      items:
+        type: object
+        properties:
+          chapter_id:
+            type: string
+            example: "1235"
+          chapter_num:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: "first chapter"
+    chapter:
+      type: object
+      properties:
+        chapter_id:
+          type: string
+          example: "1235"
+        chapter_num:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "first chapter"
+    lessons:
+      type: array
+      items:
+        type: object
+        properties:
+          lesson_id:
+            type: string
+            example: "1235"
+          lesson_num:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: "first lesson"
+          lesson_type:
+            type: string
+            example: "video"
+          video_length:
+            type: integer
+            example: 12000000
+    lesson:
+      type: object
+      properties:
+        lesson_id:
+          type: string
+          example: "1235"
+        lesson_num:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "first lesson"
+        lesson_type:
+          type: string
+          example: "video"
+        description:
+          type: string
+          example: "Good lesson"
+        src:
+          type: string
+          example: "https://example-video.mp4"
+        progress:
+          type: number
+          example: 100
+    announcements:
+      type: array
+      items:
+        type: object
+        properties:
+          announcement_id:
+            type: string
+            example: "1234"
+    announcement:
+      type: object
+      properties:
+        announcement_id:
+          type: string
+          example: "1234"
+        text:
+          type: string
+          example: "hello students`"
+        teacherID:
+          type: string
+          example: "2133232312323132323"
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              attachment_type:
+                type: string
+                example: "image"
+              src:
+                type: string
+                example: "https://example-img.png"
+
+  parameters:
+    # path parameters
+    studentID:
+      in: path
+      name: student_id
+      description: uniquely identify students.
+      schema:
+        type: string
+      example: "1234"
+      required: true
+    teacherID:
+      in: path
+      name: teacher_id
+      description: uniquely identify teachers.
+      schema:
+        type: string
+      example: "1234"
+      required: true
+    wishlistItemID:
+      in: path
+      name: wishlist_item_id
+      description: uniquely identify wishlist item.
+      schema:
+        type: string
+      example: "1234"
+      required: true
+    paymentMethodID:
+      in: path
+      name: payment_method_id
+      description: uniquely identify user's payment method.
+      schema:
+        type: string
+      example: "1234"
+      required: true
+    basketItemID:
+      in: path
+      name: basket_item_id
+      description: uniquely identify student's basket item.
+      schema:
+        type: string
+      example: "1234"
+      required: true
+    courseID:
+      in: path
+      name: course_id
+      description: uniquely identify courses.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    chapterID:
+      in: path
+      name: chapter_id
+      description: uniquely identify chapters.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    lessonID:
+      in: path
+      name: lesson_id
+      description: uniquely identify lessons.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    announcementID:
+      in: path
+      name: announcement_id
+      description: uniquely identify announcements.
+      schema:
+        type: string
+        example: "1234"
+      required: true
