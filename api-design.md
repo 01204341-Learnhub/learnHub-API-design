@@ -69,8 +69,8 @@ Use for both stores and learning pages
 │   ├── classes(/programs/classes) -get,post,patch,delete
 │   │   ├── class(/programs/classes/{class-id}) -get,patch,delete
 │   │   │   ├── students(/programs/classes/{class-id}/students) -get
-│   │   │   ├── posts(/programs/classes/{class-id}/posts) -get,post
-│   │   │   │   ├── post(/programs/classes/{class-id}/posts/{post-id}) -get,post
+│   │   │   ├── threads(/programs/classes/{class-id}/threads) -get,post
+│   │   │   │   ├── post(/programs/classes/{class-id}/threads/{thread-id}) -get,post
 ```
 
 ## Quiz API
