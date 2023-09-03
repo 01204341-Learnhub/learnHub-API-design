@@ -149,10 +149,12 @@ paths:
                 properties:
                   courses:
                     type: array
+                    deprecated: true
                     items:
                       $ref: "#/components/schemas/userCourse"
                   classes:
                     type: array
+                    deprecated: true
                     items:
                       $ref: "#/components/schemas/userClass"
   /users/students/{student_id}/programs/classes:
@@ -178,15 +180,15 @@ paths:
                     items:
                       $ref: "#/components/schemas/userClass"
   /users/students/{student_id}/programs/courses:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - user
       summary: List student's courses.
       description: |
-        For retrieving specific student's courses.
+        For listing student's courses.
       operationId: listStudentCourses
-      parameters:
-        - $ref: "#/components/parameters/studentID"
       responses:
         "200":
           description: "OK: List student's courses."
@@ -199,7 +201,73 @@ paths:
                   courses:
                     type: array
                     items:
-                      $ref: "#/components/schemas/userCourse"
+                      $ref: "#/components/schemas/studentCourses"
+  /users/students/{student_id}/programs/courses/{course_id}:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - user
+      summary: Get student's course.
+      description: |
+        For retrieveing specific student's course.
+      operationId: getStudentCourse
+      responses:
+        "200":
+          description: "OK: Get student's course"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentCourse"
+
+  /users/students/{student_id}/programs/courses/{course_id}/progress:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - user
+      summary: Get student's course progress
+      description: |
+        For retrieving specific student's course progress
+      operationId: getStudentCourseProgress
+      responses:
+        "200":
+          description: "OK: Get student's course progress"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentCourseProgress"
+    patch:
+      tags:
+        - user
+      summary: Patch student's course progress
+      description: |
+        For editing specific student's course progress
+      operationId: patchStudentCourseProgress
+      responses:
+        "200":
+          description: "OK: Edit student's course progress"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - lesson_id
+                  - finished
+                  - video_percent_completed
+                properties:
+                  lesson_id:
+                    type: string
+                    example: "1234"
+                  finished:
+                    type: boolean
+                    example: true
+                  video_percent_completed:
+                    type: number
+                    example: 50.2
+
   /users/students/{student_id}/wishlist:
     get:
       tags:
@@ -1508,6 +1576,105 @@ components:
         profile_pic:
           type: string
           example: "https://example/pic.png"
+    studentCourses:
+      type: object
+      required:
+        - course_id
+        - name
+        - instructor_name
+        - instructor_id
+        - progress
+        - rating
+      properties:
+        courses:
+          type: array
+          items:
+            properties:
+              course_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "course foo"
+              instructor_name:
+                type: string
+                example: "mister bar"
+              instructor_id:
+                type: string
+                example: "1234"
+              progress:
+                type: number
+                example: 100
+              rating:
+                type: number
+                example: 20.2
+    studentCourse:
+      type: object
+      required:
+        - name
+        - instructor_name
+        - instructor_id
+        - chapters
+        - announcements
+      properties:
+        name:
+          type: string
+          example: "course foo"
+        instructor_name:
+          type: string
+          example: "mister bar"
+        instructor_id:
+          type: string
+          example: "1234"
+        chapters:
+          type: array
+          items:
+            properties:
+              chapter_num:
+                type: integer
+                example: 0
+              chapter_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "chapter a"
+        announcements:
+          type: array
+          items:
+            properties:
+              announcement_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "announcement foo"
+              created_date:
+                type: integer
+    studentCourseProgress:
+      type: object
+      required:
+        - progress
+        - lessons
+      properties:
+        progress:
+          type: number
+          example: 20
+        lessons:
+          type: array
+          items:
+            type: object
+            properties:
+              lesson_id:
+                type: string
+                example: "1234"
+              finished:
+                type: boolean
+                example: true
+              video_percent_completed:
+                type: number
+                example: 50.2
+
     studentAchievement:
       type: object
       required:
