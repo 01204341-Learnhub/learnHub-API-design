@@ -24,8 +24,6 @@ tags:
     description: "Operations that involve transaction"
   - name: auth
     description: "Operations that involve user's authentication"
-  - name: learn
-    description: "Operations taht involve couse and class's content"
 paths:
   /users/students:
     get:
