@@ -1991,6 +1991,9 @@ components:
           name:
             type: string
             example: "paff"
+          profile_pic:
+            type: string
+            example: "https://example-pic.png"
     chapters:
       type: array
       items:
