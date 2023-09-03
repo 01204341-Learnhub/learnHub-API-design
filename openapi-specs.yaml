@@ -195,6 +195,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentClass"
 
+  # TODO: add student's class progress
+
   /users/students/{student_id}/programs/courses:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -880,15 +882,15 @@ paths:
                     type: string
                     example: "1234"
   /users/teachers/{teacher_id}/payment-methods/{payment_method_id}:
+    parameters:
+      - $ref: "#/components/parameters/teacherID"
+      - $ref: "#/components/parameters/paymentMethodID"
     get:
       tags:
         - user
       summary: Get teacher's payment method.
       description: |
         For retrieving a teacher's payment method.
-      parameters:
-        - $ref: "#/components/parameters/teacherID"
-        - $ref: "#/components/parameters/paymentMethodID"
       operationId: getTeacherPaymentMethod
       responses:
         "200":
@@ -903,9 +905,6 @@ paths:
       summary: Edit teacher's payment method.
       description: |
         For editing a teacher's payment method.
-      parameters:
-        - $ref: "#/components/parameters/teacherID"
-        - $ref: "#/components/parameters/paymentMethodID"
       operationId: patchTeacherPaymentMethod
       requestBody:
         description: User's payment method details to edit
@@ -948,9 +947,6 @@ paths:
       summary: Delete teacher's payment method.
       description: |
         For deleting a teacher's payment method.
-      parameters:
-        - $ref: "#/components/parameters/teacherID"
-        - $ref: "#/components/parameters/paymentMethodID"
       operationId: deleteTeacherPaymentMethod
       responses:
         "200":
@@ -970,6 +966,56 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/programs"
+  /programs/classes:
+    get:
+      tags:
+        - program
+      summary: List classes.
+      description: |
+        For listing's classes.
+      operationId: listClasses
+      responses:
+        "200":
+          description: "OK: List all classes"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/classes"
+  /programs/classes/{class_id}:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - program
+      summary: Get specific class.
+      description: |
+        For retrieving specific class
+      operationId: getClass
+      responses:
+        "200":
+          description: "OK: Get specific class"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/class"
+  /programs/classes/{class_id}/threads:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - program
+      summary: Get specific class threads.
+      description: |
+        For listing class threads
+      operationId: listClassThreads
+      responses:
+        "200":
+          description: "OK: List class's threads"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/threads"
+
   /programs/courses:
     get:
       tags:
@@ -1887,6 +1933,119 @@ components:
               name:
                 type: string
                 example: "basic course"
+    classes:
+      type: object
+      description: Multiple classes info.
+      properties:
+        classes:
+          type: array
+          items:
+            type: object
+            properties:
+              class_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "basic class"
+              teacher:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12345"
+                  teacher_name:
+                    type: string
+                    example: "Mister B"
+              registration_ended_date:
+                type: integer
+                example: 123123
+              price:
+                type: number
+                example: 3.5
+              course_pic:
+                type: string
+                example: "https://example-pic.com"
+
+    class:
+      type: object
+      description: Specific class info.
+      properties:
+        class_id:
+          type: string
+          example: "1234"
+        name:
+          type: string
+          example: "basic class"
+        course_pic:
+          type: string
+          example: "https://example-pic.com"
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister B"
+        registration_ended_date:
+          type: integer
+          example: 123123
+        price:
+          type: number
+          example: 3.5
+        class_objective:
+          type: array
+          items:
+            type: string
+            example: "Objective a"
+        class_requirement:
+          type: string
+          example: "Required adobe photoshop"
+        difficulty_level:
+          type: string
+          example: "very hard"
+        chapters_count:
+          type: integer
+          example: 15
+        meetings_count:
+          type: integer
+          example: 15
+        students_count:
+          type: integer
+          example: 10000
+        exercise_count:
+          type: integer
+          example: 20
+    threads:
+      type: object
+      description: Multiple class's threads
+      properties:
+        threads:
+          type: array
+          items:
+            type: object
+            properties:
+              thread_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "Thread foo"
+              teacher:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12345"
+                  teacher_name:
+                    type: string
+                    example: "Mister foo"
+              last_edit:
+                type: integer
+                example: 1213123
+
     courses:
       type: object
       description: Multiple courses info.
@@ -1908,6 +2067,9 @@ components:
                   teacher_id:
                     type: string
                     example: "12345"
+                  teacher_name:
+                    type: string
+                    example: "Mister foo"
               rating:
                 type: number
                 example: 3.5
@@ -1920,9 +2082,6 @@ components:
               course_pic:
                 type: string
                 example: "https://example-pic.com"
-              progress:
-                type: integer
-                example: 100
     course:
       type: object
       description: A course info
@@ -1954,6 +2113,9 @@ components:
           type: number
           example: 3.5
         reviewers:
+          type: integer
+          example: 300
+        students_count:
           type: integer
           example: 300
         teacher:
@@ -2087,9 +2249,15 @@ components:
         announcement_id:
           type: string
           example: "1234"
-        teacherID:
-          type: string
-          example: "2133232312323132323"
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister teacher"
         name:
           type: string
           example: "Annoucement a"
@@ -2165,6 +2333,14 @@ components:
       in: path
       name: class_id
       description: uniquely identify classes.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    threadID:
+      in: path
+      name: thread_id
+      description: uniquely identify class's thread.
       schema:
         type: string
         example: "1234"
