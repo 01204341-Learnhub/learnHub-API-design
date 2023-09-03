@@ -176,7 +176,7 @@ paths:
                   classes:
                     type: array
                     items:
-                      $ref: "#/components/schemas/userClass"
+                      $ref: "#/components/schemas/studentClasses"
   /users/students/{student_id}/programs/courses:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -1664,6 +1664,22 @@ components:
                 example: "chapter a"
         announcements:
           $ref: "#/components/schemas/announcements"
+    studentClasses:
+      type: array
+      items:
+        type: object
+        properties:
+          class_id:
+            type: string
+          name:
+            type: string
+          status:
+            type: string
+            example: "finished | not started | started"
+          class_ended_date:
+            type: integer
+            example: 12391
+
     studentCourseProgress:
       type: object
       required:
