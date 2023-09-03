@@ -162,7 +162,7 @@ paths:
       tags:
         - user
       summary: List student's classes.
-      description: For retrieving specific student's classes.
+      description: For listing student's classes.
       operationId: listStudentClasses
       responses:
         "200":
@@ -181,6 +181,19 @@ paths:
     parameters:
       - $ref: "#/components/parameters/studentID"
       - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - user
+      summary: Get specific student's class.
+      description: For retrieving specific student's class.
+      operationId: getStudentClass
+      responses:
+        "200":
+          description: "OK: Get student's classes."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentClass"
 
   /users/students/{student_id}/programs/courses:
     parameters:
@@ -1684,6 +1697,25 @@ components:
           class_ended_date:
             type: integer
             example: 12391
+    studentClass:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "course foo"
+        status:
+          type: string
+          example: "finished | not started | started"
+        class_ended_date:
+          type: integer
+          example: 12391
+        teacher_name:
+          type: string
+          example: "mister bar"
+        teacher_id:
+          type: string
+          example: "1234"
+        # TODO: add threads
 
     studentCourseProgress:
       type: object
