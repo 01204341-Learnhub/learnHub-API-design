@@ -239,6 +239,34 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/studentCourseProgress"
+    patch:
+      tags:
+        - user
+      summary: Patch student's course progress
+      description: |
+        For editing specific student's course progress
+      operationId: patchStudentCourseProgress
+      responses:
+        "200":
+          description: "OK: Edit student's course progress"
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - lesson_id
+                  - finished
+                  - video_percent_completed
+                properties:
+                  lesson_id:
+                    type: string
+                    example: "1234"
+                  finished:
+                    type: boolean
+                    example: true
+                  video_percent_completed:
+                    type: number
+                    example: 50.2
 
   /users/students/{student_id}/wishlist:
     get:
@@ -1625,6 +1653,9 @@ components:
                 type: integer
     studentCourseProgress:
       type: object
+      required:
+        - progress
+        - lessons
       properties:
         progress:
           type: number
