@@ -1004,7 +1004,7 @@ paths:
     get:
       tags:
         - program
-      summary: Get specific class threads.
+      summary: List class threads.
       description: |
         For listing class threads
       operationId: listClassThreads
@@ -1015,6 +1015,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/threads"
+  /programs/classes/{class_id}/threads/{thread_id}:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/threadID"
+    get:
+      tags:
+        - program
+      summary: Get specific class thread.
+      description: |
+        For retrieving specific class's thread
+      operationId: getClassThread
+      responses:
+        "200":
+          description: "OK: Get class's thread"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/thread"
 
   /programs/courses:
     get:
@@ -2045,6 +2063,41 @@ components:
               last_edit:
                 type: integer
                 example: 1213123
+    thread:
+      type: object
+      description: Single class's thread
+      properties:
+        name:
+          type: string
+          example: "Thread foo"
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister foo"
+        last_edit:
+          type: integer
+          example: 1213123
+        text:
+          type: string
+          example: "Text Content"
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              attachment_type:
+                type: string
+                example: "image"
+              src:
+                type: string
+                example: "https://example-img.png"
+
+                # TODO: add comments?
 
     courses:
       type: object
