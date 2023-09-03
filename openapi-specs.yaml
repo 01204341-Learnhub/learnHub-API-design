@@ -1218,9 +1218,6 @@ paths:
               required:
                 - type
               properties:
-                chapter_num:
-                  type: integer
-                  example: 1
                 name:
                   type: string
                   example: "first chapter"
