@@ -1694,6 +1694,9 @@ components:
           status:
             type: string
             example: "finished | not started | started"
+          progress:
+            type: number
+            example: 100
           class_ended_date:
             type: integer
             example: 12391
