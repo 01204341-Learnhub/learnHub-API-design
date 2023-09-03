@@ -19,7 +19,7 @@ tags:
   - name: achievement
     description: "Operations that involve achievements"
   - name: program
-    description: "Operations that involve study programs, Mainly use for store page."
+    description: "Operations that involve study programs"
   - name: transaction
     description: "Operations that involve transaction"
   - name: auth
