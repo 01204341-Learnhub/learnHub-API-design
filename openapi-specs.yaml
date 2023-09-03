@@ -1520,24 +1520,28 @@ components:
         - progress
         - rating
       properties:
-        course_id:
-          type: string
-          example: "1234"
-        name:
-          type: string
-          example: "course foo"
-        instructor_name:
-          type: string
-          example: "mister bar"
-        instructor_id:
-          type: string
-          example: "1234"
-        progress:
-          type: number
-          example: 100
-        rating:
-          type: number
-          example: 20.2
+        courses:
+          type: array
+          items:
+            properties:
+              course_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "course foo"
+              instructor_name:
+                type: string
+                example: "mister bar"
+              instructor_id:
+                type: string
+                example: "1234"
+              progress:
+                type: number
+                example: 100
+              rating:
+                type: number
+                example: 20.2
     studentAchievement:
       type: object
       required:
