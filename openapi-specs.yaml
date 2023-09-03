@@ -261,6 +261,9 @@ paths:
                   lesson_id:
                     type: string
                     example: "1234"
+                  chapter_id:
+                    type: string
+                    example: "1234"
                   finished:
                     type: boolean
                     example: true
@@ -1691,6 +1694,9 @@ components:
             type: object
             properties:
               lesson_id:
+                type: string
+                example: "1234"
+              chapter_id:
                 type: string
                 example: "1234"
               finished:
