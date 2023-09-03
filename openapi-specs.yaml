@@ -1153,9 +1153,6 @@ paths:
                 description:
                   type: string
                   example: "good chapter"
-                length:
-                  type: integer
-                  example: 10001
       responses:
         "200":
           description: "OK: Add course's chapter"
@@ -1202,9 +1199,6 @@ paths:
               required:
                 - type
               properties:
-                chapter_num:
-                  type: integer
-                  example: 1
                 name:
                   type: string
                   example: "first chapter"
@@ -1261,12 +1255,12 @@ paths:
                 name:
                   type: string
                   example: "first lesson"
-                description:
-                  type: string
-                  example: "Good lesson"
                 src:
                   type: string
                   example: "https://example-video.mp4"
+                lesson_length:
+                  type: integer
+                  example: 10000
       responses:
         "200":
           description: "OK: Add course's lesson"
@@ -1319,9 +1313,9 @@ paths:
                 src:
                   type: string
                   example: "https://example-video.mp4"
-                description:
-                  type: string
-                  example: "Good lesson"
+                lesson_length:
+                  type: integer
+                  example: 12000000
       responses:
         "200":
           $ref: "#/components/responses/OK"
@@ -1967,7 +1961,7 @@ components:
           lesson_count:
             type: integer
             example: 10
-          length:
+          chapter_length:
             type: integer
             example: 10001
     chapter:
@@ -1999,7 +1993,7 @@ components:
           lesson_type:
             type: string
             example: "video"
-          video_length:
+          lesson_length:
             type: integer
             example: 12000000
     lesson:
@@ -2017,15 +2011,12 @@ components:
         lesson_type:
           type: string
           example: "video"
-        description:
-          type: string
-          example: "Good lesson"
+        lesson_length:
+          type: integer
+          example: 12000000
         src:
           type: string
           example: "https://example-video.mp4"
-        progress:
-          type: number
-          example: 100
     announcements:
       type: array
       items:
