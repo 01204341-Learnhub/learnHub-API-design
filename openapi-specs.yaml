@@ -1581,8 +1581,8 @@ components:
       required:
         - course_id
         - name
-        - instructor_name
-        - instructor_id
+        - teacher_name
+        - teacher_id
         - progress
         - rating
       properties:
@@ -1599,10 +1599,10 @@ components:
               status:
                 type: string
                 example: "finished | not started | started"
-              instructor_name:
+              teacher_name:
                 type: string
                 example: "mister bar"
-              instructor_id:
+              teacher_id:
                 type: string
                 example: "1234"
               progress:
@@ -1615,18 +1615,18 @@ components:
       type: object
       required:
         - name
-        - instructor_name
-        - instructor_id
+        - teacher_name
+        - teacher_id
         - chapters
         - announcements
       properties:
         name:
           type: string
           example: "course foo"
-        instructor_name:
+        teacher_name:
           type: string
           example: "mister bar"
-        instructor_id:
+        teacher_id:
           type: string
           example: "1234"
         chapters:
@@ -1870,9 +1870,6 @@ components:
         description:
           type: string
           example: "Redstone course"
-        quick_description:
-          type: string
-          example: "A basic course"
         rating:
           type: number
           example: 3.5
