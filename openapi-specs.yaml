@@ -2021,7 +2021,7 @@ components:
           name:
             type: string
             example: "Announcement foo"
-          created_date:
+          last_edit:
             type: integer
             example: 1233323
     announcement:
@@ -2036,7 +2036,7 @@ components:
         name:
           type: string
           example: "Annoucement a"
-        created_date:
+        last_edit:
           type: integer
           example: 1233323
         text:
