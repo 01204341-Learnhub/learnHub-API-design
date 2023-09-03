@@ -221,6 +221,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentCourse"
 
+  /users/students/{student_id}/programs/courses/{course_id}/progress:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - user
+      summary: Get student's course progress
+      description: |
+        For retrieving specific student's course progress
+      operationId: getStudentCourseProgress
+      responses:
+        "200":
+          description: "OK: Get student's course progress"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentCourseProgress"
+
   /users/students/{student_id}/wishlist:
     get:
       tags:
@@ -1604,6 +1623,26 @@ components:
                 example: "announcement foo"
               created_date:
                 type: integer
+    studentCourseProgress:
+      type: object
+      properties:
+        progress:
+          type: number
+          example: 20
+        lessons:
+          type: array
+          items:
+            type: object
+            properties:
+              lesson_id:
+                type: string
+                example: "1234"
+              finished:
+                type: boolean
+                example: true
+              video_percent_completed:
+                type: number
+                example: 50.2
 
     studentAchievement:
       type: object
