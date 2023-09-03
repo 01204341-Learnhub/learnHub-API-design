@@ -180,15 +180,15 @@ paths:
                     items:
                       $ref: "#/components/schemas/userClass"
   /users/students/{student_id}/programs/courses:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - user
       summary: List student's courses.
       description: |
-        For retrieving specific student's courses.
+        For listing student's courses.
       operationId: listStudentCourses
-      parameters:
-        - $ref: "#/components/parameters/studentID"
       responses:
         "200":
           description: "OK: List student's courses."
@@ -202,6 +202,25 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/studentCourses"
+  /users/students/{student_id}/programs/courses/{course_id}:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+      - $ref: "#/components/parameters/courseID"
+    get:
+      tags:
+        - user
+      summary: Get student's course.
+      description: |
+        For retrieveing specific student's course.
+      operationId: getStudentCourse
+      responses:
+        "200":
+          description: "OK: Get student's course"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentCourse"
+
   /users/students/{student_id}/wishlist:
     get:
       tags:
@@ -1542,6 +1561,50 @@ components:
               rating:
                 type: number
                 example: 20.2
+    studentCourse:
+      type: object
+      required:
+        - name
+        - instructor_name
+        - instructor_id
+        - chapters
+        - announcements
+      properties:
+        name:
+          type: string
+          example: "course foo"
+        instructor_name:
+          type: string
+          example: "mister bar"
+        instructor_id:
+          type: string
+          example: "1234"
+        chapters:
+          type: array
+          items:
+            properties:
+              chapter_num:
+                type: integer
+                example: 0
+              chapter_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "chapter a"
+        announcements:
+          type: array
+          items:
+            properties:
+              announcement_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "announcement foo"
+              created_date:
+                type: integer
+
     studentAchievement:
       type: object
       required:
