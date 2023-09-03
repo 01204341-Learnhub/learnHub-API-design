@@ -156,14 +156,14 @@ paths:
                     items:
                       $ref: "#/components/schemas/userClass"
   /users/students/{student_id}/programs/classes:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - user
       summary: List student's classes.
       description: For retrieving specific student's classes.
       operationId: listStudentClasses
-      parameters:
-        - $ref: "#/components/parameters/studentID"
       responses:
         "200":
           description: "OK: List student's classes."
@@ -177,6 +177,11 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/studentClasses"
+  /user/students/{student_id}/programs/classes/{class_id}:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+      - $ref: "#/components/parameters/classID"
+
   /users/students/{student_id}/programs/courses:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -2114,6 +2119,14 @@ components:
       in: path
       name: course_id
       description: uniquely identify courses.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    classID:
+      in: path
+      name: class_id
+      description: uniquely identify classes.
       schema:
         type: string
         example: "1234"
