@@ -261,6 +261,9 @@ paths:
                   lesson_id:
                     type: string
                     example: "1234"
+                  chapter_id:
+                    type: string
+                    example: "1234"
                   finished:
                     type: boolean
                     example: true
@@ -980,18 +983,29 @@ paths:
           application/json:
             schema:
               properties:
+                teacher_id:
+                  type: string
+                  example: "1234"
                 name:
                   type: string
-                  example: "basic course"
+                  example: "basic redstone course"
                 course_pic:
                   type: string
                   example: "https://example-pic.com"
                 description:
                   type: string
-                  example: "A basic course"
-                quick_description:
+                  example: "Redstone course"
+                course_objective:
+                  type: array
+                  items:
+                    type: string
+                    example: "Objective a"
+                course_requirement:
                   type: string
-                  example: "A basic course"
+                  example: "Required adobe photoshop"
+                difficulty_level:
+                  type: string
+                  example: "very hard"
                 price:
                   type: number
                   example: 100
@@ -1040,16 +1054,24 @@ paths:
               properties:
                 name:
                   type: string
-                  example: "basic course"
+                  example: "basic redstone course"
                 course_pic:
                   type: string
                   example: "https://example-pic.com"
                 description:
                   type: string
-                  example: "A basic course"
-                quick_description:
+                  example: "Redstone course"
+                course_objective:
+                  type: array
+                  items:
+                    type: string
+                    example: "Objective a"
+                course_requirement:
                   type: string
-                  example: "A basic course"
+                  example: "Required adobe photoshop"
+                difficulty_level:
+                  type: string
+                  example: "very hard"
                 price:
                   type: number
                   example: 100
@@ -1177,9 +1199,6 @@ paths:
               required:
                 - type
               properties:
-                chapter_num:
-                  type: integer
-                  example: 1
                 name:
                   type: string
                   example: "first chapter"
@@ -1236,12 +1255,12 @@ paths:
                 name:
                   type: string
                   example: "first lesson"
-                description:
-                  type: string
-                  example: "Good lesson"
                 src:
                   type: string
                   example: "https://example-video.mp4"
+                lesson_length:
+                  type: integer
+                  example: 10000
       responses:
         "200":
           description: "OK: Add course's lesson"
@@ -1294,9 +1313,9 @@ paths:
                 src:
                   type: string
                   example: "https://example-video.mp4"
-                description:
-                  type: string
-                  example: "Good lesson"
+                lesson_length:
+                  type: integer
+                  example: 12000000
       responses:
         "200":
           $ref: "#/components/responses/OK"
@@ -1346,6 +1365,9 @@ paths:
                 announcement_id:
                   type: string
                   example: "1234"
+                name:
+                  type: string
+                  example: "Announcement a"
                 text:
                   type: string
                   example: "hello students`"
@@ -1407,7 +1429,7 @@ paths:
               properties:
                 text:
                   type: string
-                  example: "hello students`"
+                  example: "hello students"
                 attachments:
                   type: array
                   items:
@@ -1581,8 +1603,8 @@ components:
       required:
         - course_id
         - name
-        - instructor_name
-        - instructor_id
+        - teacher_name
+        - teacher_id
         - progress
         - rating
       properties:
@@ -1596,10 +1618,13 @@ components:
               name:
                 type: string
                 example: "course foo"
-              instructor_name:
+              status:
+                type: string
+                example: "finished | not started | started"
+              teacher_name:
                 type: string
                 example: "mister bar"
-              instructor_id:
+              teacher_id:
                 type: string
                 example: "1234"
               progress:
@@ -1612,18 +1637,18 @@ components:
       type: object
       required:
         - name
-        - instructor_name
-        - instructor_id
+        - teacher_name
+        - teacher_id
         - chapters
         - announcements
       properties:
         name:
           type: string
           example: "course foo"
-        instructor_name:
+        teacher_name:
           type: string
           example: "mister bar"
-        instructor_id:
+        teacher_id:
           type: string
           example: "1234"
         chapters:
@@ -1640,17 +1665,7 @@ components:
                 type: string
                 example: "chapter a"
         announcements:
-          type: array
-          items:
-            properties:
-              announcement_id:
-                type: string
-                example: "1234"
-              name:
-                type: string
-                example: "announcement foo"
-              created_date:
-                type: integer
+          $ref: "#/components/schemas/announcements"
     studentCourseProgress:
       type: object
       required:
@@ -1666,6 +1681,9 @@ components:
             type: object
             properties:
               lesson_id:
+                type: string
+                example: "1234"
+              chapter_id:
                 type: string
                 example: "1234"
               finished:
@@ -1867,9 +1885,17 @@ components:
         description:
           type: string
           example: "Redstone course"
-        quick_description:
+        course_objective:
+          type: array
+          items:
+            type: string
+            example: "Objective a"
+        course_requirement:
           type: string
-          example: "A basic course"
+          example: "Required adobe photoshop"
+        difficulty_level:
+          type: string
+          example: "very hard"
         rating:
           type: number
           example: 3.5
@@ -1882,6 +1908,9 @@ components:
             teacher_id:
               type: string
               example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister teacher"
         price:
           type: number
           example: 100
@@ -1897,9 +1926,6 @@ components:
         total_files:
           type: integer
           example: 10
-        progress:
-          type: integer
-          example: 100
     course_students:
       type: array
       items:
@@ -1925,6 +1951,12 @@ components:
           name:
             type: string
             example: "first chapter"
+          lesson_count:
+            type: integer
+            example: 10
+          chapter_length:
+            type: integer
+            example: 10001
     chapter:
       type: object
       properties:
@@ -1954,7 +1986,7 @@ components:
           lesson_type:
             type: string
             example: "video"
-          video_length:
+          lesson_length:
             type: integer
             example: 12000000
     lesson:
@@ -1972,15 +2004,12 @@ components:
         lesson_type:
           type: string
           example: "video"
-        description:
-          type: string
-          example: "Good lesson"
+        lesson_length:
+          type: integer
+          example: 12000000
         src:
           type: string
           example: "https://example-video.mp4"
-        progress:
-          type: number
-          example: 100
     announcements:
       type: array
       items:
@@ -1989,18 +2018,30 @@ components:
           announcement_id:
             type: string
             example: "1234"
+          name:
+            type: string
+            example: "Announcement foo"
+          last_edit:
+            type: integer
+            example: 1233323
     announcement:
       type: object
       properties:
         announcement_id:
           type: string
           example: "1234"
-        text:
-          type: string
-          example: "hello students`"
         teacherID:
           type: string
           example: "2133232312323132323"
+        name:
+          type: string
+          example: "Annoucement a"
+        last_edit:
+          type: integer
+          example: 1233323
+        text:
+          type: string
+          example: "hello students"
         attachments:
           type: array
           items:
