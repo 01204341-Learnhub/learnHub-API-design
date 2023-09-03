@@ -980,18 +980,29 @@ paths:
           application/json:
             schema:
               properties:
+                teacher_id:
+                  type: string
+                  example: "1234"
                 name:
                   type: string
-                  example: "basic course"
+                  example: "basic redstone course"
                 course_pic:
                   type: string
                   example: "https://example-pic.com"
                 description:
                   type: string
-                  example: "A basic course"
-                quick_description:
+                  example: "Redstone course"
+                course_objective:
+                  type: array
+                  items:
+                    type: string
+                    example: "Objective a"
+                course_requirement:
                   type: string
-                  example: "A basic course"
+                  example: "Required adobe photoshop"
+                difficulty_level:
+                  type: string
+                  example: "very hard"
                 price:
                   type: number
                   example: 100
@@ -1040,16 +1051,24 @@ paths:
               properties:
                 name:
                   type: string
-                  example: "basic course"
+                  example: "basic redstone course"
                 course_pic:
                   type: string
                   example: "https://example-pic.com"
                 description:
                   type: string
-                  example: "A basic course"
-                quick_description:
+                  example: "Redstone course"
+                course_objective:
+                  type: array
+                  items:
+                    type: string
+                    example: "Objective a"
+                course_requirement:
                   type: string
-                  example: "A basic course"
+                  example: "Required adobe photoshop"
+                difficulty_level:
+                  type: string
+                  example: "very hard"
                 price:
                   type: number
                   example: 100
@@ -1131,6 +1150,9 @@ paths:
                 description:
                   type: string
                   example: "good chapter"
+                length:
+                  type: integer
+                  example: 10001
       responses:
         "200":
           description: "OK: Add course's chapter"
@@ -1870,6 +1892,17 @@ components:
         description:
           type: string
           example: "Redstone course"
+        course_objective:
+          type: array
+          items:
+            type: string
+            example: "Objective a"
+        course_requirement:
+          type: string
+          example: "Required adobe photoshop"
+        difficulty_level:
+          type: string
+          example: "very hard"
         rating:
           type: number
           example: 3.5
@@ -1882,6 +1915,9 @@ components:
             teacher_id:
               type: string
               example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister teacher"
         price:
           type: number
           example: 100
@@ -1897,9 +1933,6 @@ components:
         total_files:
           type: integer
           example: 10
-        progress:
-          type: integer
-          example: 100
     course_students:
       type: array
       items:
@@ -1925,6 +1958,12 @@ components:
           name:
             type: string
             example: "first chapter"
+          lesson_count:
+            type: integer
+            example: 10
+          length:
+            type: integer
+            example: 10001
     chapter:
       type: object
       properties:
