@@ -213,13 +213,7 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                  - courses
-                properties:
-                  courses:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/studentCourses"
+                $ref: "#/components/schemas/studentCourses"
   /users/students/{student_id}/programs/courses/{course_id}:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -1224,9 +1218,6 @@ paths:
               required:
                 - type
               properties:
-                chapter_num:
-                  type: integer
-                  example: 1
                 name:
                   type: string
                   example: "first chapter"
@@ -1981,7 +1972,7 @@ components:
               price:
                 type: number
                 example: 3.5
-              course_pic:
+              class_pic:
                 type: string
                 example: "https://example-pic.com"
 
@@ -2010,6 +2001,9 @@ components:
         registration_ended_date:
           type: integer
           example: 123123
+        class_ended_date:
+          type: integer
+          example: 12391
         price:
           type: number
           example: 3.5
@@ -2024,16 +2018,19 @@ components:
         difficulty_level:
           type: string
           example: "very hard"
-        chapters_count:
+        chapter_count:
           type: integer
           example: 15
-        meetings_count:
+        meeting_count:
           type: integer
           example: 15
-        students_count:
+        student_count:
           type: integer
           example: 10000
-        exercise_count:
+        max_student:
+          type: integer
+          example: 10000
+        assignment_count:
           type: integer
           example: 20
     threads:
@@ -2126,7 +2123,7 @@ components:
               rating:
                 type: number
                 example: 3.5
-              reviewers:
+              review_count:
                 type: integer
                 example: 300
               price:
@@ -2165,10 +2162,10 @@ components:
         rating:
           type: number
           example: 3.5
-        reviewers:
+        review_count:
           type: integer
           example: 300
-        students_count:
+        student_count:
           type: integer
           example: 300
         teacher:
@@ -2186,13 +2183,13 @@ components:
         total_video_length:
           type: integer
           example: 10000000
-        total_chapters:
+        chapter_count:
           type: integer
           example: 10
-        total_exercise:
+        quiz_count:
           type: integer
           example: 10
-        total_files:
+        file_count:
           type: integer
           example: 10
     course_students:
