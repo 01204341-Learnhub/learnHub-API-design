@@ -699,7 +699,7 @@ paths:
     get:
       tags:
         - user
-      summary: List teacher's programs.
+      summary: Teacher's main dashboard.
       description: For retrieving specific teacher's programs.
       operationId: listTeacherPrograms
       parameters:
@@ -726,7 +726,7 @@ paths:
     get:
       tags:
         - user
-      summary: List teacher's classes.
+      summary: Teacher's class dashboard.
       description: For retrieving specific teacher's classes.
       operationId: listTeacherClasses
       parameters:
@@ -748,7 +748,7 @@ paths:
     get:
       tags:
         - user
-      summary: List teacher's courses.
+      summary: Teacher's course dashboard.
       description: |
         For retrieving specific teacher's courses.
       operationId: listTeacherCourses
