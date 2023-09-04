@@ -130,8 +130,8 @@ paths:
     get:
       tags:
         - user
-      summary: List student's programs.
-      description: For retrieving specific student's programs.
+      summary: Use for student's main dashboard.
+      description: For retrieving student's dashboard information.
       operationId: listStudentPrograms
       parameters:
         - $ref: "#/components/parameters/studentID"
@@ -161,7 +161,7 @@ paths:
     get:
       tags:
         - user
-      summary: List student's classes.
+      summary: For retrieving students' class dashboard.
       description: For listing student's classes.
       operationId: listStudentClasses
       responses:
@@ -203,7 +203,7 @@ paths:
     get:
       tags:
         - user
-      summary: List student's courses.
+      summary: For retrieving student's course dashboard.
       description: |
         For listing student's courses.
       operationId: listStudentCourses
