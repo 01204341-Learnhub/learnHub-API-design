@@ -1138,8 +1138,18 @@ paths:
                 course_objective:
                   type: array
                   items:
-                    type: string
-                    example: "Objective a"
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | remove | edit"
+                      old:
+                        type: string
+                        example: "Master Python"
+                      value:
+                        type: string
+                        example: "Master CPP"
+
                 course_requirement:
                   type: string
                   example: "Required adobe photoshop"
