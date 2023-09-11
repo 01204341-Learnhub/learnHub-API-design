@@ -195,7 +195,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentClass"
 
-  # TODO: add student's class progress
+  /user/students/{student_id}/programs/classes/{class_id}/progress:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - user
+      summary: Get specific studen's class progress.
+      description: For retrieving specific student's class progress.
+      operationId: getStudentClassProgress
+      responses:
+        "200":
+          description: "OK: Get student's class progress."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentClassProgress"
 
   /users/students/{student_id}/programs/courses:
     parameters:
@@ -1812,6 +1828,17 @@ components:
                 type: number
                 example: 50.2
 
+    studentClassProgress:
+      type: object
+      required:
+        - progress
+        - lessons
+      properties:
+        progress:
+          type: number
+          example: 20
+        # TODO: Add quiz progresses
+
     studentAchievement:
       type: object
       required:
@@ -2248,6 +2275,9 @@ components:
         name:
           type: string
           example: "first chapter"
+        description:
+          type: string
+          example: "A good chapter"
     lessons:
       type: array
       items:
