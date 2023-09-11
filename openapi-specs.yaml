@@ -128,6 +128,7 @@ paths:
                       $ref: "#/components/schemas/studentAchievement"
   /users/students/{student_id}/programs:
     get:
+      deprecated: true
       tags:
         - user
       summary: Use for student's main dashboard.
@@ -147,12 +148,10 @@ paths:
                 properties:
                   courses:
                     type: array
-                    deprecated: true
                     items:
                       $ref: "#/components/schemas/userCourse"
                   classes:
                     type: array
-                    deprecated: true
                     items:
                       $ref: "#/components/schemas/userClass"
   /users/students/{student_id}/programs/classes:
@@ -713,6 +712,7 @@ paths:
                       $ref: "#/components/schemas/teacher"
   /users/teachers/{teacher_id}/programs:
     get:
+      deprecated: true
       tags:
         - user
       summary: Teacher's main dashboard.
@@ -753,13 +753,7 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                  - classes
-                properties:
-                  classes:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/userClass"
+                $ref: "#/components/schemas/teacherClasses"
   /users/teachers/{teacher_id}/programs/courses:
     get:
       tags:
@@ -776,13 +770,7 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                  - courses
-                properties:
-                  courses:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/teacherCourses"
+                $ref: "#/components/schemas/teacherCourses"
   /users/teachers/{teacher_id}/config:
     get:
       tags:
@@ -1711,6 +1699,9 @@ components:
               course_id:
                 type: string
                 example: "1234"
+              course_pic:
+                type: string
+                example: "https://example-pic.com"
               name:
                 type: string
                 example: "course foo"
@@ -1743,6 +1734,9 @@ components:
         name:
           type: string
           example: "course foo"
+        course_pic:
+          type: string
+          example: "https://example-pic.com"
         teacher:
           type: object
           properties:
@@ -1776,6 +1770,9 @@ components:
             type: string
           name:
             type: string
+          class_pic:
+            type: string
+            example: "https://example-pic.com"
           status:
             type: string
             example: "finished | not started | started"
@@ -1805,6 +1802,9 @@ components:
         name:
           type: string
           example: "course foo"
+        class_pic:
+          type: string
+          example: "https://example-pic.com"
         status:
           type: string
           example: "finished | not started | started"
@@ -2000,6 +2000,37 @@ components:
                 type: integer
                 example: 300
 
+    teacherClasses:
+      properties:
+        classes:
+          type: array
+          items:
+            properties:
+              class_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "basic class"
+              class_pic:
+                type: string
+                example: "https://example-pic.com"
+              status:
+                type: string
+                example: "finished | not started | started"
+              registration_ended_date:
+                type: integer
+                example: 123123
+              class_ended_date:
+                type: integer
+                example: 12391
+              student_count:
+                type: integer
+                example: 10000
+              max_student:
+                type: integer
+                example: 10000
+
     # PROGRAMS SCHEMAS
     programs:
       type: object
@@ -2037,6 +2068,9 @@ components:
               name:
                 type: string
                 example: "basic class"
+              class_pic:
+                type: string
+                example: "https://example-pic.com"
               teacher:
                 type: object
                 properties:
@@ -2046,15 +2080,15 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister B"
+              status:
+                type: string
+                example: "finished | not started | started"
               registration_ended_date:
                 type: integer
                 example: 123123
               price:
                 type: number
                 example: 3.5
-              class_pic:
-                type: string
-                example: "https://example-pic.com"
 
     class:
       type: object
@@ -2066,7 +2100,7 @@ components:
         name:
           type: string
           example: "basic class"
-        course_pic:
+        class_pic:
           type: string
           example: "https://example-pic.com"
         teacher:
@@ -2078,6 +2112,9 @@ components:
             teacher_name:
               type: string
               example: "Mister B"
+        status:
+          type: string
+          example: "finished | not started | started"
         registration_ended_date:
           type: integer
           example: 123123
