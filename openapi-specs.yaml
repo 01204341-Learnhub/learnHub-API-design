@@ -1700,8 +1700,7 @@ components:
       required:
         - course_id
         - name
-        - teacher_name
-        - teacher_id
+        - teacher
         - progress
         - rating
       properties:
@@ -1718,12 +1717,15 @@ components:
               status:
                 type: string
                 example: "finished | not started | started"
-              teacher_name:
-                type: string
-                example: "mister bar"
-              teacher_id:
-                type: string
-                example: "1234"
+              teacher:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12345"
+                  teacher_name:
+                    type: string
+                    example: "Mister teacher"
               progress:
                 type: number
                 example: 100
@@ -1734,20 +1736,22 @@ components:
       type: object
       required:
         - name
-        - teacher_name
-        - teacher_id
+        - teacher
         - chapters
         - announcements
       properties:
         name:
           type: string
           example: "course foo"
-        teacher_name:
-          type: string
-          example: "mister bar"
-        teacher_id:
-          type: string
-          example: "1234"
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister teacher"
         chapters:
           type: array
           items:
@@ -1781,8 +1785,22 @@ components:
           class_ended_date:
             type: integer
             example: 12391
+          teacher:
+            type: object
+            properties:
+              teacher_id:
+                type: string
+                example: "12345"
+              teacher_name:
+                type: string
+                example: "Mister teacher"
     studentClass:
       type: object
+      required:
+        - name
+        - status
+        - class_ended_date
+        - teacher
       properties:
         name:
           type: string
@@ -1793,12 +1811,15 @@ components:
         class_ended_date:
           type: integer
           example: 12391
-        teacher_name:
-          type: string
-          example: "mister bar"
-        teacher_id:
-          type: string
-          example: "1234"
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister teacher"
         # TODO: add threads
 
     studentCourseProgress:
