@@ -128,10 +128,11 @@ paths:
                       $ref: "#/components/schemas/studentAchievement"
   /users/students/{student_id}/programs:
     get:
+      deprecated: true
       tags:
         - user
-      summary: List student's programs.
-      description: For retrieving specific student's programs.
+      summary: Use for student's main dashboard.
+      description: For retrieving student's dashboard information.
       operationId: listStudentPrograms
       parameters:
         - $ref: "#/components/parameters/studentID"
@@ -147,12 +148,10 @@ paths:
                 properties:
                   courses:
                     type: array
-                    deprecated: true
                     items:
                       $ref: "#/components/schemas/userCourse"
                   classes:
                     type: array
-                    deprecated: true
                     items:
                       $ref: "#/components/schemas/userClass"
   /users/students/{student_id}/programs/classes:
@@ -161,7 +160,7 @@ paths:
     get:
       tags:
         - user
-      summary: List student's classes.
+      summary: For retrieving students' class dashboard.
       description: For listing student's classes.
       operationId: listStudentClasses
       responses:
@@ -195,7 +194,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentClass"
 
-  # TODO: add student's class progress
+  /user/students/{student_id}/programs/classes/{class_id}/progress:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - user
+      summary: Get specific studen's class progress.
+      description: For retrieving specific student's class progress.
+      operationId: getStudentClassProgress
+      responses:
+        "200":
+          description: "OK: Get student's class progress."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentClassProgress"
 
   /users/students/{student_id}/programs/courses:
     parameters:
@@ -203,7 +218,7 @@ paths:
     get:
       tags:
         - user
-      summary: List student's courses.
+      summary: For retrieving student's course dashboard.
       description: |
         For listing student's courses.
       operationId: listStudentCourses
@@ -697,9 +712,10 @@ paths:
                       $ref: "#/components/schemas/teacher"
   /users/teachers/{teacher_id}/programs:
     get:
+      deprecated: true
       tags:
         - user
-      summary: List teacher's programs.
+      summary: Teacher's main dashboard.
       description: For retrieving specific teacher's programs.
       operationId: listTeacherPrograms
       parameters:
@@ -726,7 +742,7 @@ paths:
     get:
       tags:
         - user
-      summary: List teacher's classes.
+      summary: Teacher's class dashboard.
       description: For retrieving specific teacher's classes.
       operationId: listTeacherClasses
       parameters:
@@ -737,18 +753,12 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                  - classes
-                properties:
-                  classes:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/userClass"
+                $ref: "#/components/schemas/teacherClasses"
   /users/teachers/{teacher_id}/programs/courses:
     get:
       tags:
         - user
-      summary: List teacher's courses.
+      summary: Teacher's course dashboard.
       description: |
         For retrieving specific teacher's courses.
       operationId: listTeacherCourses
@@ -760,13 +770,7 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                  - courses
-                properties:
-                  courses:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/userCourse"
+                $ref: "#/components/schemas/teacherCourses"
   /users/teachers/{teacher_id}/config:
     get:
       tags:
@@ -1138,8 +1142,18 @@ paths:
                 course_objective:
                   type: array
                   items:
-                    type: string
-                    example: "Objective a"
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | remove | edit"
+                      old:
+                        type: string
+                        example: "Master Python"
+                      value:
+                        type: string
+                        example: "Master CPP"
+
                 course_requirement:
                   type: string
                   example: "Required adobe photoshop"
@@ -1674,8 +1688,7 @@ components:
       required:
         - course_id
         - name
-        - teacher_name
-        - teacher_id
+        - teacher
         - progress
         - rating
       properties:
@@ -1686,18 +1699,24 @@ components:
               course_id:
                 type: string
                 example: "1234"
+              course_pic:
+                type: string
+                example: "https://example-pic.com"
               name:
                 type: string
                 example: "course foo"
               status:
                 type: string
                 example: "finished | not started | started"
-              teacher_name:
-                type: string
-                example: "mister bar"
-              teacher_id:
-                type: string
-                example: "1234"
+              teacher:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12345"
+                  teacher_name:
+                    type: string
+                    example: "Mister teacher"
               progress:
                 type: number
                 example: 100
@@ -1708,20 +1727,25 @@ components:
       type: object
       required:
         - name
-        - teacher_name
-        - teacher_id
+        - teacher
         - chapters
         - announcements
       properties:
         name:
           type: string
           example: "course foo"
-        teacher_name:
+        course_pic:
           type: string
-          example: "mister bar"
-        teacher_id:
-          type: string
-          example: "1234"
+          example: "https://example-pic.com"
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister teacher"
         chapters:
           type: array
           items:
@@ -1746,6 +1770,9 @@ components:
             type: string
           name:
             type: string
+          class_pic:
+            type: string
+            example: "https://example-pic.com"
           status:
             type: string
             example: "finished | not started | started"
@@ -1755,24 +1782,44 @@ components:
           class_ended_date:
             type: integer
             example: 12391
+          teacher:
+            type: object
+            properties:
+              teacher_id:
+                type: string
+                example: "12345"
+              teacher_name:
+                type: string
+                example: "Mister teacher"
     studentClass:
       type: object
+      required:
+        - name
+        - status
+        - class_ended_date
+        - teacher
       properties:
         name:
           type: string
           example: "course foo"
+        class_pic:
+          type: string
+          example: "https://example-pic.com"
         status:
           type: string
           example: "finished | not started | started"
         class_ended_date:
           type: integer
           example: 12391
-        teacher_name:
-          type: string
-          example: "mister bar"
-        teacher_id:
-          type: string
-          example: "1234"
+        teacher:
+          type: object
+          properties:
+            teacher_id:
+              type: string
+              example: "12345"
+            teacher_name:
+              type: string
+              example: "Mister teacher"
         # TODO: add threads
 
     studentCourseProgress:
@@ -1801,6 +1848,17 @@ components:
               video_percent_completed:
                 type: number
                 example: 50.2
+
+    studentClassProgress:
+      type: object
+      required:
+        - progress
+        - lessons
+      properties:
+        progress:
+          type: number
+          example: 20
+        # TODO: Add quiz progresses
 
     studentAchievement:
       type: object
@@ -1920,6 +1978,59 @@ components:
           type: string
           example: "https://example/pic.png"
 
+    teacherCourses:
+      properties:
+        courses:
+          type: array
+          items:
+            properties:
+              course_id:
+                type: string
+                example: "1234"
+              course_pic:
+                type: string
+                example: "https://example-pic.com"
+              name:
+                type: string
+                example: "course foo"
+              rating:
+                type: number
+                example: 20.2
+              student_count:
+                type: integer
+                example: 300
+
+    teacherClasses:
+      properties:
+        classes:
+          type: array
+          items:
+            properties:
+              class_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "basic class"
+              class_pic:
+                type: string
+                example: "https://example-pic.com"
+              status:
+                type: string
+                example: "finished | not started | started"
+              registration_ended_date:
+                type: integer
+                example: 123123
+              class_ended_date:
+                type: integer
+                example: 12391
+              student_count:
+                type: integer
+                example: 10000
+              max_student:
+                type: integer
+                example: 10000
+
     # PROGRAMS SCHEMAS
     programs:
       type: object
@@ -1957,6 +2068,9 @@ components:
               name:
                 type: string
                 example: "basic class"
+              class_pic:
+                type: string
+                example: "https://example-pic.com"
               teacher:
                 type: object
                 properties:
@@ -1966,15 +2080,15 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister B"
+              status:
+                type: string
+                example: "finished | not started | started"
               registration_ended_date:
                 type: integer
                 example: 123123
               price:
                 type: number
                 example: 3.5
-              class_pic:
-                type: string
-                example: "https://example-pic.com"
 
     class:
       type: object
@@ -1986,7 +2100,7 @@ components:
         name:
           type: string
           example: "basic class"
-        course_pic:
+        class_pic:
           type: string
           example: "https://example-pic.com"
         teacher:
@@ -1998,6 +2112,9 @@ components:
             teacher_name:
               type: string
               example: "Mister B"
+        status:
+          type: string
+          example: "finished | not started | started"
         registration_ended_date:
           type: integer
           example: 123123
@@ -2238,6 +2355,9 @@ components:
         name:
           type: string
           example: "first chapter"
+        description:
+          type: string
+          example: "A good chapter"
     lessons:
       type: array
       items:
