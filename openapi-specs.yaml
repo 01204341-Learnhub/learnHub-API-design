@@ -782,7 +782,7 @@ paths:
                   courses:
                     type: array
                     items:
-                      $ref: "#/components/schemas/userCourse"
+                      $ref: "#/components/schemas/teacherCourses"
   /users/teachers/{teacher_id}/config:
     get:
       tags:
@@ -1977,6 +1977,28 @@ components:
         profile_pic:
           type: string
           example: "https://example/pic.png"
+
+    teacherCourses:
+      properties:
+        courses:
+          type: array
+          items:
+            properties:
+              course_id:
+                type: string
+                example: "1234"
+              course_pic:
+                type: string
+                example: "https://example-pic.com"
+              name:
+                type: string
+                example: "course foo"
+              rating:
+                type: number
+                example: 20.2
+              student_count:
+                type: integer
+                example: 300
 
     # PROGRAMS SCHEMAS
     programs:
