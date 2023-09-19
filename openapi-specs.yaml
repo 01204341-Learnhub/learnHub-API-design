@@ -283,7 +283,7 @@ paths:
                 required:
                   - lesson_id
                   - finished
-                  - video_percent_completed
+                  - lesson_completed
                 properties:
                   lesson_id:
                     type: string
@@ -294,7 +294,7 @@ paths:
                   finished:
                     type: boolean
                     example: true
-                  video_percent_completed:
+                  lesson_completed:
                     type: number
                     example: 50.2
 
@@ -1845,7 +1845,7 @@ components:
               finished:
                 type: boolean
                 example: true
-              video_percent_completed:
+              lesson_completed:
                 type: number
                 example: 50.2
 
@@ -2083,6 +2083,17 @@ components:
               status:
                 type: string
                 example: "finished | not started | started"
+              tags:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag_id:
+                      type: string
+                      example: "1234"
+                    tag_name:
+                      type: string
+                      example: "Neural Network"
               registration_ended_date:
                 type: integer
                 example: 123123
@@ -2112,6 +2123,17 @@ components:
             teacher_name:
               type: string
               example: "Mister B"
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              tag_id:
+                type: string
+                example: "1234"
+              tag_name:
+                type: string
+                example: "Neural Network"
         status:
           type: string
           example: "finished | not started | started"
@@ -2237,6 +2259,17 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister foo"
+              tags:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag_id:
+                      type: string
+                      example: "1234"
+                    tag_name:
+                      type: string
+                      example: "Neural Network"
               rating:
                 type: number
                 example: 3.5
@@ -2262,6 +2295,17 @@ components:
         course_pic:
           type: string
           example: "https://example-pic.com"
+        tags:
+          type: array
+          items:
+            type: object
+            properties:
+              tag_id:
+                type: string
+                example: "1234"
+              tag_name:
+                type: string
+                example: "Neural Network"
         description:
           type: string
           example: "Redstone course"
