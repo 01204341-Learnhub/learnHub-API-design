@@ -273,6 +273,28 @@ paths:
       description: |
         For editing specific student's course progress
       operationId: patchStudentCourseProgress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - lesson_id
+                - finished
+                - lesson_completed
+              properties:
+                lesson_id:
+                  type: string
+                  example: "1234"
+                chapter_id:
+                  type: string
+                  example: "1234"
+                finished:
+                  type: boolean
+                  example: true
+                lesson_completed:
+                  type: number
+                  example: 50.2
       responses:
         "200":
           description: "OK: Edit student's course progress"
@@ -280,23 +302,10 @@ paths:
             application/json:
               schema:
                 type: object
-                required:
-                  - lesson_id
-                  - finished
-                  - lesson_completed
                 properties:
-                  lesson_id:
-                    type: string
-                    example: "1234"
-                  chapter_id:
-                    type: string
-                    example: "1234"
-                  finished:
-                    type: boolean
-                    example: true
-                  lesson_completed:
+                  progress:
                     type: number
-                    example: 50.2
+                    example: 50.0
 
   /users/students/{student_id}/wishlist:
     get:
