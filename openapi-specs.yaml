@@ -20,6 +20,8 @@ tags:
     description: "Operations that involve achievements"
   - name: program
     description: "Operations that involve study programs"
+  - name: quiz
+    description: "Operations that involve quizzes"
   - name: transaction
     description: "Operations that involve transaction"
   - name: auth
@@ -1566,6 +1568,25 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+
+  /quizzes/{quiz_id}:
+    parameters:
+      - $ref: "#/components/parameters/quizID"
+    get:
+      tags:
+        - quiz
+      summary: Get specific quiz.
+      description: |
+        For retrieving quiz.
+      operationId: getQuiz
+      responses:
+        "200":
+          description: "OK: Get quiz."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quiz"
+
 components:
   responses:
     OK:
@@ -1606,6 +1627,7 @@ components:
             code: 404
             message: "Not Found"
 
+  # SCHEMAS
   schemas:
     responseScheme:
       type: object
@@ -2579,30 +2601,31 @@ components:
             answer_f:
               type: string
               example: "MSN-01"
-        correct_answers:
-          type: object
-          properties:
-            answer_a:
-              type: boolean
-              example: false
-            answer_b:
-              type: boolean
-              example: true
-            answer_c:
-              type: boolean
-              example: false
-            answer_d:
-              type: boolean
-              example: false
-            answer_e:
-              type: boolean
-              example: false
-            answer_f:
-              type: boolean
-              example: false
 
+    correct_answers:
+      type: object
+      properties:
+        answer_a:
+          type: boolean
+          example: false
+        answer_b:
+          type: boolean
+          example: true
+        answer_c:
+          type: boolean
+          example: false
+        answer_d:
+          type: boolean
+          example: false
+        answer_e:
+          type: boolean
+          example: false
+        answer_f:
+          type: boolean
+          example: false
+
+  # PARAMETERS
   parameters:
-    # path parameters
     studentID:
       in: path
       name: student_id
@@ -2687,6 +2710,14 @@ components:
       in: path
       name: announcement_id
       description: uniquely identify announcements.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    quizID:
+      in: path
+      name: quiz_id
+      description: uniquely identify quiz.
       schema:
         type: string
         example: "1234"
