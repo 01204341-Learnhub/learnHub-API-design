@@ -1090,7 +1090,7 @@ paths:
                   items:
                     type: string
                     example: "Objective a"
-                tags:
+                tag_ids:
                   type: array
                   description: Array of tag_id
                   items:
@@ -1157,7 +1157,7 @@ paths:
                 description:
                   type: string
                   example: "Redstone course"
-                tags:
+                tag_ids:
                   type: object
                   properties:
                     op:
