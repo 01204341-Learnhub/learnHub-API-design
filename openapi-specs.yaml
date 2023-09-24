@@ -2522,6 +2522,84 @@ components:
               src:
                 type: string
                 example: "https://example-img.png"
+    quiz:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Fan pun tae Gundam
+        description:
+          type: string
+          example: description
+        time_limit:
+          type: integer
+          example: 1000
+        quiz_pic:
+          type: string
+        problems:
+          type: array
+          items:
+            $ref: "#/components/schemas/problem"
+
+    problem:
+      type: object
+      required:
+        - problem_num
+        - question
+        - multiple_correct_answers
+        - answers
+      properties:
+        problem_num:
+          type: integer
+          example: 1
+        question:
+          type: string
+          example: "What is Nu Gundam Machine Code?"
+        multiple_correct_answers:
+          type: boolean
+          example: false
+        answers:
+          type: object
+          properties:
+            answer_a:
+              type: string
+              example: "RX-78"
+            answer_b:
+              type: string
+              example: "RX-93"
+            answer_c:
+              type: string
+              example: "MSN-04"
+            answer_d:
+              type: string
+              example: "MSN-01"
+            answer_e:
+              type: string
+              example: "MSN-01"
+            answer_f:
+              type: string
+              example: "MSN-01"
+        correct_answers:
+          type: object
+          properties:
+            answer_a:
+              type: boolean
+              example: false
+            answer_b:
+              type: boolean
+              example: true
+            answer_c:
+              type: boolean
+              example: false
+            answer_d:
+              type: boolean
+              example: false
+            answer_e:
+              type: boolean
+              example: false
+            answer_f:
+              type: boolean
+              example: false
 
   parameters:
     # path parameters
