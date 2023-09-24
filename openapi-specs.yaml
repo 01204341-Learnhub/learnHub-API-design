@@ -20,6 +20,8 @@ tags:
     description: "Operations that involve achievements"
   - name: program
     description: "Operations that involve study programs"
+  - name: quiz
+    description: "Operations that involve quizzes"
   - name: transaction
     description: "Operations that involve transaction"
   - name: auth
@@ -1566,6 +1568,92 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+
+  /quizzes/{quiz_id}:
+    parameters:
+      - $ref: "#/components/parameters/quizID"
+    get:
+      tags:
+        - quiz
+      summary: Get specific quiz.
+      description: |
+        For retrieving quiz.
+      operationId: getQuiz
+      responses:
+        "200":
+          description: "OK: Get quiz."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quiz"
+
+  /quizzes/{quiz_id}/result:
+    parameters:
+      - in: path
+        name: quiz_id
+        description: uniquely identify quiz.
+        schema:
+          type: string
+          example: "1234"
+        required: true
+      - in: query
+        name: student_id
+        schema:
+          type: string
+          example: "1234"
+        required: true
+    get:
+      tags:
+        - quiz
+      summary: Get specific user's quiz result.
+      description: |
+        For retrieving user quiz result.
+      operationId: getQuizResult
+      responses:
+        "200":
+          description: "OK: Get quiz result."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quiz_result"
+    patch:
+      tags:
+        - quiz
+      summary: Patch specific quiz and submit answer.
+      description: |
+        For submitting student's quiz answers.
+      operationId: patchQuiz
+      requestBody:
+        description: Student's quiz answers
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: "started | finish"
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      problem_num:
+                        type: integer
+                        example: 1
+                      answer:
+                        $ref: "#/components/schemas/correct_answer"
+      responses:
+        "200":
+          description: "OK: Patch quiz result."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer_responses:
+                    $ref: "#/components/schemas/quiz_answer_responses"
+
 components:
   responses:
     OK:
@@ -1606,6 +1694,7 @@ components:
             code: 404
             message: "Not Found"
 
+  # SCHEMAS
   schemas:
     responseScheme:
       type: object
@@ -2522,9 +2611,128 @@ components:
               src:
                 type: string
                 example: "https://example-img.png"
+    quiz:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Fan pun tae Gundam
+        description:
+          type: string
+          example: description
+        time_limit:
+          type: integer
+          example: 1000
+        quiz_pic:
+          type: string
+          example: "https://example-pic.jpeg"
+        problems:
+          type: array
+          items:
+            $ref: "#/components/schemas/problem"
 
+    problem:
+      type: object
+      required:
+        - problem_num
+        - question
+        - multiple_correct_answers
+        - answers
+      properties:
+        problem_num:
+          type: integer
+          example: 1
+        question:
+          type: string
+          example: "What is Nu Gundam Machine Code?"
+        multiple_correct_answers:
+          type: boolean
+          example: false
+        answer:
+          $ref: "#/components/schemas/quiz_answer"
+
+    quiz_answer:
+      type: object
+      properties:
+        answer_a:
+          type: string
+          example: "RX-78"
+        answer_b:
+          type: string
+          example: "RX-93"
+        answer_c:
+          type: string
+          example: "MSN-04"
+        answer_d:
+          type: string
+          example: "MSN-01"
+        answer_e:
+          type: string
+          example: "MSN-01"
+        answer_f:
+          type: string
+          example: "MSN-01"
+
+    correct_answer:
+      type: object
+      properties:
+        answer_a:
+          type: boolean
+          example: false
+        answer_b:
+          type: boolean
+          example: true
+        answer_c:
+          type: boolean
+          example: false
+        answer_d:
+          type: boolean
+          example: false
+        answer_e:
+          type: boolean
+          example: false
+        answer_f:
+          type: boolean
+          example: false
+
+    quiz_answer_responses:
+      type: array
+      items:
+        type: object
+        properties:
+          correct_answer:
+            $ref: "#/components/schemas/correct_answer"
+          explanation:
+            type: string
+            example: "You are wrong because you suck!!!"
+
+    quiz_result: # TODO: add fields
+      type: object
+      properties:
+        status:
+          type: string
+          example: "not started | started | finish"
+        score:
+          type: integer
+          example: 6
+        problems:
+          type: array
+          items:
+            type: object
+            properties:
+              problem_num:
+                type: integer
+                example: 1
+              answer:
+                $ref: "#/components/schemas/quiz_answer"
+              correct_answer:
+                $ref: "#/components/schemas/correct_answer"
+              explanation:
+                type: string
+                example: "You are wrong!!!"
+
+  # PARAMETERS
   parameters:
-    # path parameters
     studentID:
       in: path
       name: student_id
@@ -2609,6 +2817,14 @@ components:
       in: path
       name: announcement_id
       description: uniquely identify announcements.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    quizID:
+      in: path
+      name: quiz_id
+      description: uniquely identify quiz.
       schema:
         type: string
         example: "1234"

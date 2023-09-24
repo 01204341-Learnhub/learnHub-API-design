@@ -79,8 +79,8 @@ Use for quiz.
 
 ```
 ├── quizzes(/quizzes) -get,post
-│   ├── quiz(/quizzes/{quiz_id}?student_id=123) -get,patch
-│   │   ├── result(/quizzes/{quiz_id}/result?student_id=123) -get,post
+│   ├── quiz(/quizzes/{quiz_id}) -get,patch
+│   │   ├── result(/quizzes/{quiz_id}/result?student_id=123) -get
 ```
 
 ## Transaction API
