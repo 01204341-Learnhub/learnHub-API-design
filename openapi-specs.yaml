@@ -2706,7 +2706,7 @@ components:
             type: string
             example: "You are wrong because you suck!!!"
 
-    quiz_result: # TODO: add fields
+    quiz_result:
       type: object
       properties:
         status:
