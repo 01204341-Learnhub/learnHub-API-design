@@ -2371,6 +2371,9 @@ components:
         total_video_length:
           type: integer
           example: 10000000
+        video_count:
+          type: integer
+          example: 10
         chapter_count:
           type: integer
           example: 10
