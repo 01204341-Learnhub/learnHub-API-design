@@ -1587,6 +1587,73 @@ paths:
               schema:
                 $ref: "#/components/schemas/quiz"
 
+  /quizzes/{quiz_id}/result:
+    parameters:
+      - in: path
+        name: quiz_id
+        description: uniquely identify quiz.
+        schema:
+          type: string
+          example: "1234"
+        required: true
+      - in: query
+        name: student_id
+        schema:
+          type: string
+          example: "1234"
+        required: true
+    get:
+      tags:
+        - quiz
+      summary: Get specific user's quiz result.
+      description: |
+        For retrieving user quiz result.
+      operationId: getQuizResult
+      responses:
+        "200":
+          description: "OK: Get quiz result."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quiz_result"
+    patch:
+      tags:
+        - quiz
+      summary: Patch specific quiz and submit answer.
+      description: |
+        For submitting student's quiz answers.
+      operationId: patchQuiz
+      requestBody:
+        description: Student's quiz answers
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: "started | finish"
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      problem_num:
+                        type: integer
+                        example: 1
+                      answer:
+                        $ref: "#/components/schemas/correct_answer"
+      responses:
+        "200":
+          description: "OK: Patch quiz result."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  answer_responses:
+                    $ref: "#/components/schemas/quiz_answer_responses"
+
 components:
   responses:
     OK:
@@ -2558,6 +2625,7 @@ components:
           example: 1000
         quiz_pic:
           type: string
+          example: "https://example-pic.jpeg"
         problems:
           type: array
           items:
@@ -2580,29 +2648,32 @@ components:
         multiple_correct_answers:
           type: boolean
           example: false
-        answers:
-          type: object
-          properties:
-            answer_a:
-              type: string
-              example: "RX-78"
-            answer_b:
-              type: string
-              example: "RX-93"
-            answer_c:
-              type: string
-              example: "MSN-04"
-            answer_d:
-              type: string
-              example: "MSN-01"
-            answer_e:
-              type: string
-              example: "MSN-01"
-            answer_f:
-              type: string
-              example: "MSN-01"
+        answer:
+          $ref: "#/components/schemas/quiz_answer"
 
-    correct_answers:
+    quiz_answer:
+      type: object
+      properties:
+        answer_a:
+          type: string
+          example: "RX-78"
+        answer_b:
+          type: string
+          example: "RX-93"
+        answer_c:
+          type: string
+          example: "MSN-04"
+        answer_d:
+          type: string
+          example: "MSN-01"
+        answer_e:
+          type: string
+          example: "MSN-01"
+        answer_f:
+          type: string
+          example: "MSN-01"
+
+    correct_answer:
       type: object
       properties:
         answer_a:
@@ -2623,6 +2694,42 @@ components:
         answer_f:
           type: boolean
           example: false
+
+    quiz_answer_responses:
+      type: array
+      items:
+        type: object
+        properties:
+          correct_answer:
+            $ref: "#/components/schemas/correct_answer"
+          explanation:
+            type: string
+            example: "You are wrong because you suck!!!"
+
+    quiz_result: # TODO: add fields
+      type: object
+      properties:
+        status:
+          type: string
+          example: "not started | started | finish"
+        score:
+          type: integer
+          example: 6
+        problems:
+          type: array
+          items:
+            type: object
+            properties:
+              problem_num:
+                type: integer
+                example: 1
+              answer:
+                $ref: "#/components/schemas/quiz_answer"
+              correct_answer:
+                $ref: "#/components/schemas/correct_answer"
+              explanation:
+                type: string
+                example: "You are wrong!!!"
 
   # PARAMETERS
   parameters:
