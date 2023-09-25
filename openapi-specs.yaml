@@ -1642,7 +1642,7 @@ paths:
                         type: integer
                         example: 1
                       answer:
-                        $ref: "#/components/schemas/correct_answer"
+                        $ref: "#/components/schemas/quiz_answer"
       responses:
         "200":
           description: "OK: Patch quiz result."
@@ -2648,10 +2648,10 @@ components:
         multiple_correct_answers:
           type: boolean
           example: false
-        answer:
-          $ref: "#/components/schemas/quiz_answer"
+        choice:
+          $ref: "#/components/schemas/choice"
 
-    quiz_answer:
+    choice:
       type: object
       properties:
         answer_a:
@@ -2673,7 +2673,7 @@ components:
           type: string
           example: "MSN-01"
 
-    correct_answer:
+    quiz_answer:
       type: object
       properties:
         answer_a:
@@ -2704,7 +2704,7 @@ components:
             type: integer
             example: 1
           correct_answer:
-            $ref: "#/components/schemas/correct_answer"
+            $ref: "#/components/schemas/quiz_answer"
           explanation:
             type: string
             example: "You are wrong because you suck!!!"
@@ -2729,7 +2729,7 @@ components:
               answer:
                 $ref: "#/components/schemas/quiz_answer"
               correct_answer:
-                $ref: "#/components/schemas/correct_answer"
+                $ref: "#/components/schemas/quiz_answer"
               explanation:
                 type: string
                 example: "You are wrong!!!"
