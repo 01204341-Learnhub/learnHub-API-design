@@ -2700,6 +2700,9 @@ components:
       items:
         type: object
         properties:
+          problem_num:
+            type: integer
+            example: 1
           correct_answer:
             $ref: "#/components/schemas/correct_answer"
           explanation:
