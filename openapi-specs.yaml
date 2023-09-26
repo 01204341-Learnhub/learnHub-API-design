@@ -2654,22 +2654,22 @@ components:
     choice:
       type: object
       properties:
-        answer_a:
+        choice_a:
           type: string
           example: "RX-78"
-        answer_b:
+        choice_b:
           type: string
           example: "RX-93"
-        answer_c:
+        choice_c:
           type: string
           example: "MSN-04"
-        answer_d:
+        choice_d:
           type: string
           example: "MSN-01"
-        answer_e:
+        choice_e:
           type: string
           example: "MSN-01"
-        answer_f:
+        choice_f:
           type: string
           example: "MSN-01"
 
