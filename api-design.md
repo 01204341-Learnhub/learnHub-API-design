@@ -70,7 +70,10 @@ Use for both stores and learning pages
 │   │   ├── class(/programs/classes/{class-id}) -get,patch,delete
 │   │   │   ├── students(/programs/classes/{class-id}/students) -get
 │   │   │   ├── threads(/programs/classes/{class-id}/threads) -get,post
-│   │   │   │   ├── post(/programs/classes/{class-id}/threads/{thread-id}) -get,post
+│   │   │   │   ├── thread(/programs/classes/{class-id}/threads/{thread-id}) -get,post
+│   │   │   ├── assignments(/programs/classes/{class-id}/assignments) -get,post
+│   │   │   │   ├── assignment(/programs/classes/{class-id}/assignments/{assignment-id}) - patch, delete
+
 ```
 
 ## Quiz API

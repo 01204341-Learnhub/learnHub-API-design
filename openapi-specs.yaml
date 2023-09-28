@@ -2351,6 +2351,79 @@ components:
 
                 # TODO: add comments?
 
+    assignment_group:
+      type: object
+      description: Group a assignment belonged to
+      properties:
+        group_name:
+          type: string
+          example: "chapter1-assignment"
+        group_id:
+          type: string
+          example: "1234"
+
+    assignments:
+      type: object
+      description: Multiple course's assignments
+      properties:
+        assignments:
+          type: array
+          items:
+            type: object
+            properties:
+              assignment_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "Pre-test homework"
+              group:
+                $ref: "#/components/schemas/assignment_group"
+              last_edit:
+                type: integer
+                example: 1231131
+              due_time:
+                type: integer
+                example: 1231231231
+              status:
+                type: string
+                example: "open | closed"
+              text:
+                type: string
+                example: "You must do this homework!!"
+    assignment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Pre-test homework"
+        group:
+          $ref: "#/components/schemas/assignment_group"
+        last_edit:
+          type: integer
+          example: 1231131
+        due_time:
+          type: integer
+          example: 1231231231
+        status:
+          type: string
+          example: "open | closed"
+        text:
+          type: string
+          example: "You must do this homework!!"
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              attachment_type:
+                type: string
+                example: "image"
+              src:
+                type: string
+                example: "https://example-img.png"
+        # TODO: Add comments
+
     courses:
       type: object
       description: Multiple courses info.
