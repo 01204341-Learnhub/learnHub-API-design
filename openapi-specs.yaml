@@ -1045,6 +1045,43 @@ paths:
               schema:
                 $ref: "#/components/schemas/thread"
 
+  /programs/classes/{class_id}/assignments:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - program
+      summary: List class's assignments.
+      description: |
+        For listing class's assignments
+      operationId: listClassAssignments
+      responses:
+        "200":
+          description: "OK: Get class's assignments"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assignments"
+
+  /programs/classes/{class_id}/assignments/{assignment_id}:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+    get:
+      tags:
+        - program
+      summary: Get specific class assignment.
+      description: |
+        For retrieving specific class's assignment
+      operationId: getClassAssignment
+      responses:
+        "200":
+          description: "OK: Get class's assignment"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assignment"
+
   # COURSE
   /programs/courses:
     get:
@@ -2869,6 +2906,14 @@ components:
       in: path
       name: thread_id
       description: uniquely identify class's thread.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    assignmentID:
+      in: path
+      name: assignment_id
+      description: uniquely identify class's assignment.
       schema:
         type: string
         example: "1234"
