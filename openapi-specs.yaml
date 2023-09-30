@@ -760,23 +760,6 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/teacher"
-  /users/teachers/{teacher_id}:
-    parameters:
-      - $ref: "#/components/parameters/teacherID"
-    get:
-      tags:
-        - user
-      summary: Get specific teacher basic information.
-      description: |
-        For retrieving specific teacher's profile.
-      operationId: getTeacher
-      responses:
-        "200":
-          description: "OK: List teachers."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/teacher"
     post:
       tags:
         - user
@@ -815,6 +798,66 @@ paths:
                   teacher_id:
                     type: string
                     example: "12314"
+  /users/teachers/{teacher_id}:
+    parameters:
+      - $ref: "#/components/parameters/teacherID"
+    get:
+      tags:
+        - user
+      summary: Get specific teacher basic information.
+      description: |
+        For retrieving specific teacher's profile.
+      operationId: getTeacher
+      responses:
+        "200":
+          description: "OK: List teachers."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/teacher"
+    patch:
+      tags:
+        - user
+      summary: Edit teacher
+      description: |
+        For editing teacher.
+      operationId: patchTeacher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                  example: "Paff"
+                fullname:
+                  type: string
+                  example: "Firstname Lastname"
+                profile_pic:
+                  type: string
+                  example: "https://profile-pic.png"
+      responses:
+        "200":
+          description: "OK: Edit teacher."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - user
+      summary: Delete teacher
+      description: |
+        For removing teacher.
+      operationId: deleteTeacher
+      responses:
+        "200":
+          description: "OK: Delete teacher."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
+
   /users/teachers/{teacher_id}/programs:
     get:
       deprecated: true
