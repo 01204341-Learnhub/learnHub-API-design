@@ -1490,9 +1490,6 @@ paths:
                   items:
                     type: object
                     properties:
-                      attachment_type:
-                        type: string
-                        example: "image"
                       src:
                         type: string
                         example: "https://example-img.png"
@@ -1549,10 +1546,13 @@ paths:
                   items:
                     type: object
                     properties:
-                      attachment_type:
+                      op:
                         type: string
-                        example: "image"
-                      src:
+                        example: "add | delete | edit"
+                      old_src:
+                        type: string
+                        example: "https://example-img-old.png"
+                      new_src:
                         type: string
                         example: "https://example-img.png"
       responses:
