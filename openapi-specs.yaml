@@ -1933,6 +1933,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister teacher"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               progress:
                 type: number
                 example: 100
@@ -1962,6 +1965,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         chapters:
           type: array
           items:
@@ -2007,6 +2013,9 @@ components:
               teacher_name:
                 type: string
                 example: "Mister teacher"
+              profile_pic:
+                type: string
+                example: "https://profile-pic.png"
     studentClass:
       type: object
       required:
@@ -2036,6 +2045,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         # TODO: add threads
 
     studentCourseProgress:
@@ -2299,6 +2311,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister B"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               status:
                 type: string
                 example: "finished | not started | started"
@@ -2342,6 +2357,9 @@ components:
             teacher_name:
               type: string
               example: "Mister B"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         tags:
           type: array
           items:
@@ -2415,6 +2433,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister foo"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               last_edit:
                 type: integer
                 example: 1213123
@@ -2434,6 +2455,9 @@ components:
             teacher_name:
               type: string
               example: "Mister foo"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         last_edit:
           type: integer
           example: 1213123
@@ -2478,6 +2502,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister foo"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               tags:
                 type: array
                 items:
@@ -2557,6 +2584,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         price:
           type: number
           example: 100
@@ -2694,6 +2724,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         name:
           type: string
           example: "Annoucement a"
