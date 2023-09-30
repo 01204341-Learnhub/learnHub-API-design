@@ -1538,6 +1538,9 @@ paths:
             schema:
               type: object
               properties:
+                name:
+                  typr: string
+                  example: "New name"
                 text:
                   type: string
                   example: "hello students"
