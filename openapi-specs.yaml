@@ -768,6 +768,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/teacher"
+    post:
+      tags:
+        - user
+      summary: Add teacher
+      description: |
+        For creating teacher.
+      operationId: postTeacher
+      responses:
+        "200":
+          description: "OK: Add teacher."
+          content:
+            application/json:
+              schema:
+                properties:
+                  uid:
+                    type: string
+                    example: "123123213"
+                  username:
+                    type: string
+                    example: "Paff"
+                  email:
+                    type: string
+                    example: "myemail@gmail.com"
+                  fullname:
+                    type: string
+                    example: "Firstname Lastname"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
   /users/teachers/{teacher_id}/programs:
     get:
       deprecated: true
