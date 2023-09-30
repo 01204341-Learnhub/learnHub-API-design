@@ -48,6 +48,36 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/student"
+    post:
+      tags:
+        - user
+      summary: Add student
+      description: |
+        For creating student.
+      operationId: postStudent
+      responses:
+        "200":
+          description: "OK: Add student."
+          content:
+            application/json:
+              schema:
+                properties:
+                  uid:
+                    type: string
+                    example: "123123213"
+                  username:
+                    type: string
+                    example: "Paff"
+                  email:
+                    type: string
+                    example: "myemail@gmail.com"
+                  fullname:
+                    type: string
+                    example: "Firstname Lastname"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
+
   /users/students/{student_id}:
     get:
       tags:
@@ -1539,7 +1569,7 @@ paths:
               type: object
               properties:
                 name:
-                  typr: string
+                  type: string
                   example: "New name"
                 text:
                   type: string
@@ -1790,6 +1820,9 @@ components:
         student_id:
           type: string
           example: "123456789"
+        uid:
+          type: string
+          example: "133123123"
         username:
           type: string
           example: "foo-bar"
