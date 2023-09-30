@@ -751,6 +751,23 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/teacher"
+  /users/teachers/{teacher_id}:
+    parameters:
+      - $ref: "#/components/parameters/teacherID"
+    get:
+      tags:
+        - user
+      summary: Get specific teacher basic information.
+      description: |
+        For retrieving specific teacher's profile.
+      operationId: getTeacher
+      responses:
+        "200":
+          description: "OK: List teachers."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/teacher"
   /users/teachers/{teacher_id}/programs:
     get:
       deprecated: true
@@ -2114,6 +2131,9 @@ components:
         - fullname
         - profile_pic
       properties:
+        uid:
+          type: string
+          example: "123132213"
         teacher_id:
           type: string
           example: "123456789"
