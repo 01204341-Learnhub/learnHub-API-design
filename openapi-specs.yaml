@@ -48,6 +48,45 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/student"
+    post:
+      tags:
+        - user
+      summary: Add student
+      description: |
+        For creating student.
+      operationId: postStudent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                uid:
+                  type: string
+                  example: "123123213"
+                username:
+                  type: string
+                  example: "Paff"
+                email:
+                  type: string
+                  example: "myemail@gmail.com"
+                fullname:
+                  type: string
+                  example: "Firstname Lastname"
+                profile_pic:
+                  type: string
+                  example: "https://profile-pic.png"
+      responses:
+        "200":
+          description: "OK: Add student."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  student_id:
+                    type: string
+                    example: "12314"
+
   /users/students/{student_id}:
     get:
       tags:
@@ -721,6 +760,61 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/teacher"
+  /users/teachers/{teacher_id}:
+    parameters:
+      - $ref: "#/components/parameters/teacherID"
+    get:
+      tags:
+        - user
+      summary: Get specific teacher basic information.
+      description: |
+        For retrieving specific teacher's profile.
+      operationId: getTeacher
+      responses:
+        "200":
+          description: "OK: List teachers."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/teacher"
+    post:
+      tags:
+        - user
+      summary: Add teacher
+      description: |
+        For creating teacher.
+      operationId: postTeacher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                uid:
+                  type: string
+                  example: "123123213"
+                username:
+                  type: string
+                  example: "Paff"
+                email:
+                  type: string
+                  example: "myemail@gmail.com"
+                fullname:
+                  type: string
+                  example: "Firstname Lastname"
+                profile_pic:
+                  type: string
+                  example: "https://profile-pic.png"
+      responses:
+        "200":
+          description: "OK: Add teacher."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12314"
   /users/teachers/{teacher_id}/programs:
     get:
       deprecated: true
@@ -1539,7 +1633,7 @@ paths:
               type: object
               properties:
                 name:
-                  typr: string
+                  type: string
                   example: "New name"
                 text:
                   type: string
@@ -1790,6 +1884,9 @@ components:
         student_id:
           type: string
           example: "123456789"
+        uid:
+          type: string
+          example: "133123123"
         username:
           type: string
           example: "foo-bar"
@@ -2081,6 +2178,9 @@ components:
         - fullname
         - profile_pic
       properties:
+        uid:
+          type: string
+          example: "123132213"
         teacher_id:
           type: string
           example: "123456789"
