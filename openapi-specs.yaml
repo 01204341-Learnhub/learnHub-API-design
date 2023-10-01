@@ -1805,9 +1805,6 @@ paths:
             schema:
               type: object
               properties:
-                course_id:
-                  type: string
-                  example: "1234"
                 student_id:
                   type: string
                   example: "1234"
