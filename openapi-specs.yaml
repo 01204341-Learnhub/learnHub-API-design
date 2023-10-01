@@ -530,11 +530,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "12121313"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "232"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -600,11 +600,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "1231"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "123"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -1006,11 +1006,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "1233"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "123"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -1073,11 +1073,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "1231"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "12313"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -1794,6 +1794,42 @@ paths:
                   answer_responses:
                     $ref: "#/components/schemas/quiz_answer_responses"
 
+  /transactions/course/purchase:
+    post:
+      tags:
+        - transaction
+      summary: Make purchase transaction
+      description: |
+        Make purchase transaction
+      operationId: postCoursePurchase
+      requestBody:
+        description: Course to purchase
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                course_id:
+                  type: string
+                  example: "1234"
+                student_id:
+                  type: string
+                  example: "1234"
+                payment_method_id:
+                  type: string
+                  example: "1234"
+      responses:
+        "200":
+          description: "OK: Make purchases."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    example: "1234"
+
 components:
   responses:
     OK:
@@ -1903,11 +1939,11 @@ components:
           type: string
           example: "kbank_debit"
         card_number:
-          type: integer
-          example: 12121313
+          type: string
+          example: "1231"
         cvc:
-          type: integer
-          example: 232
+          type: string
+          example: "12332"
         expiration_date:
           type: string
           example: "08/25"
