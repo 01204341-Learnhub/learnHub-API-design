@@ -1705,6 +1705,101 @@ paths:
         "200":
           $ref: "#/components/responses/OK"
 
+  /quizzes:
+    post:
+      tags:
+        - quiz
+      summary: Add specific quiz.
+      description: |
+        For inserting quiz.
+      operationId: postQuiz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "quiz name"
+                description:
+                  type: string
+                  example: "quiz description"
+                time_limit:
+                  type: integer
+                  example: 12313
+                quiz_pic:
+                  type: string
+                  example: "https://example-pic.png"
+                problems:
+                  type: object
+                  properties:
+                    problem_num:
+                      type: integer
+                      example: 1
+                    question:
+                      type: string
+                      example: "When should you name are?"
+                    multiple_correct_answers:
+                      type: boolean
+                      example: false
+                    explanation:
+                      type: string
+                      example: "You are wrong!!!"
+                    choice:
+                      type: object
+                      properties:
+                        choice_a:
+                          type: string
+                          example: "a"
+                        choice_b:
+                          type: string
+                          example: "b"
+                        choice_c:
+                          type: string
+                          example: "c"
+                        choice_d:
+                          type: string
+                          example: "d"
+                        choice_e:
+                          type: string
+                          example: "e"
+                        choice_f:
+                          type: string
+                          example: "f"
+                    correct_answer:
+                      type: object
+                      properties:
+                        answer_a:
+                          type: boolean
+                          example: true
+                        answer_b:
+                          type: boolean
+                          example: false
+                        answer_c:
+                          type: boolean
+                          example: false
+                        answer_d:
+                          type: boolean
+                          example: false
+                        answer_e:
+                          type: boolean
+                          example: false
+                        answer_f:
+                          type: boolean
+                          example: false
+      responses:
+        "200":
+          description: "OK: post quiz"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quiz_id:
+                    type: string
+                    example: "2134"
+
   /quizzes/{quiz_id}:
     parameters:
       - $ref: "#/components/parameters/quizID"
