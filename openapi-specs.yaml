@@ -2228,23 +2228,49 @@ components:
     studentBasketItem:
       type: object
       required:
+        - basket_item_id
         - name
         - type
+        - teacher
         - price
         - program_id
       properties:
         basket_item_id:
           type: string
           example: "1234"
-        name:
-          type: string
-          example: "discreet math"
         type:
           type: string
           example: "class"
         program_id:
           type: string
           example: "1234"
+        name:
+          type: string
+          example: "discreet math"
+        teacher:
+          type: object
+          properties:
+            teacher_name:
+              type: string
+              example: "Brown Sugar"
+            teacher_id:
+              type: string
+              example: "1234"
+        program_pic:
+          type: string
+          example: "https://local-picture.com"
+        rating:
+          type: number
+          example: 20.2
+        review_count:
+          type: integer
+          example: 30
+        total_video_length:
+          type: integer
+          example: 123123
+        difficulty_level:
+          type: string
+          example: "hard"
         price:
           type: number
           example: 1200.2
