@@ -684,20 +684,16 @@ paths:
         content:
           application/json:
             schema:
-              minItems: 2
-              maxItems: 2
               required:
                 - type
+                - program_id
               properties:
                 type:
                   type: string
                   example: "class"
-                class_id:
+                program_id:
                   type: string
-                  example: "1234"
-                course_id:
-                  type: string
-                  example: "1234"
+                  example: "123"
       responses:
         "200":
           description: "OK: Add student basket item"
@@ -2234,12 +2230,11 @@ components:
           example: "Intro to physics"
     studentBasketItem:
       type: object
-      minItems: 4
-      maxItems: 4
       required:
         - name
         - type
         - price
+        - program_id
       properties:
         basket_item_id:
           type: string
@@ -2250,12 +2245,9 @@ components:
         type:
           type: string
           example: "class"
-        class_id:
+        program_id:
           type: string
-          example: "123"
-        course_id:
-          type: string
-          example: "123"
+          example: "1234"
         price:
           type: number
           example: 1200.2
