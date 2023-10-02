@@ -1093,6 +1093,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+
+  # PROGRAMS
   /programs:
     get:
       tags:
@@ -1108,6 +1110,50 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/programs"
+
+  /program/tags:
+    get:
+      tags:
+        - program
+      summary: For listing program's tags
+      operationId: listProgramTags
+      responses:
+        "200":
+          description: "OK: List all tags"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/tag"
+    post:
+      tags:
+        - program
+      summary: For adding program's tag
+      operationId: postProgramTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag_name:
+                  type: string
+                  example: "python"
+      responses:
+        "200":
+          description: "OK: Post tag"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tag_id:
+                    type: string
+                    example: "1234"
 
   # CLASS
   /programs/classes:
@@ -2452,6 +2498,16 @@ components:
                 example: 10000
 
     # PROGRAMS SCHEMAS
+
+    tag:
+      type: object
+      properties:
+        tag_id:
+          type: string
+          example: "1234"
+        tag_name:
+          type: string
+          example: "python"
     programs:
       type: object
       description: Multiple programs info.
