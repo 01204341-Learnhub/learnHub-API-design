@@ -1276,7 +1276,7 @@ paths:
                         example: "https://example-img.png"
       responses:
         "200":
-          description: "OK: Add class's assigment"
+          description: "OK: Add class's assignment"
           content:
             application/json:
               schema:
@@ -1304,6 +1304,59 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/assignment"
+    patch:
+      tags:
+        - program
+      summary: Patch specific class assignment.
+      description: |
+        For editing specific class's assignment
+      operationId: patchClassAssignment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Assignment name"
+                due_time:
+                  type: integer
+                  example: 123131
+                status:
+                  type: string
+                  example: "open | closed"
+                text:
+                  type: string
+                  example: "You want to do this homework?"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | delete | edit"
+                      old_src:
+                        type: string
+                        example: "https://example-img-old.png"
+                      new_src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - program
+      summary: Delete specific class's assignment.
+      description: |
+        For removing a class's assignment.
+      operationId: deleteClassAssignment
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+
   /programs/classes/{class_id}/assignments/groups:
     parameters:
       - $ref: "#/components/parameters/classID"
