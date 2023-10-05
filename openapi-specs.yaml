@@ -1224,6 +1224,163 @@ paths:
               schema:
                 $ref: "#/components/schemas/thread"
 
+  /programs/classes/{class_id}/assignments:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - program
+      summary: List class's assignments.
+      description: |
+        For listing class's assignments
+      operationId: listClassAssignments
+      responses:
+        "200":
+          description: "OK: Get class's assignments"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assignments"
+    post:
+      tags:
+        - program
+      summary: Post class's assignments.
+      description: |
+        For creating class's assignments
+      operationId: postClassAssignments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Assignment's name"
+                group_name:
+                  type: string
+                  example: "If group_name already existed assign assignment to that group \nelse create new group"
+                due_time:
+                  type: integer
+                  example: 1233
+                text:
+                  type: string
+                  example: "You must do this homework!!"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          description: "OK: Add class's assignment"
+          content:
+            application/json:
+              schema:
+                required:
+                  - assignment_id
+                properties:
+                  assignment_id:
+                    type: string
+                    example: "1234"
+  /programs/classes/{class_id}/assignments/{assignment_id}:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+    get:
+      tags:
+        - program
+      summary: Get specific class assignment.
+      description: |
+        For retrieving specific class's assignment
+      operationId: getClassAssignment
+      responses:
+        "200":
+          description: "OK: Get class's assignment"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assignment"
+    patch:
+      tags:
+        - program
+      summary: Patch specific class assignment.
+      description: |
+        For editing specific class's assignment
+      operationId: patchClassAssignment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Assignment name"
+                due_time:
+                  type: integer
+                  example: 123131
+                status:
+                  type: string
+                  example: "open | closed"
+                text:
+                  type: string
+                  example: "You want to do this homework?"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | delete | edit"
+                      old_src:
+                        type: string
+                        example: "https://example-img-old.png"
+                      new_src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - program
+      summary: Delete specific class's assignment.
+      description: |
+        For removing a class's assignment.
+      operationId: deleteClassAssignment
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
+
+  /programs/classes/{class_id}/assignments/groups:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - program
+      summary: List specific class assignment's groups.
+      description: |
+        For listing specific class's assignment groups
+      operationId: listClassAssignmentGroups
+      responses:
+        "200":
+          description: "OK: List class's assignment group"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assignment_groups:
+                    type: array
+                    items:
+                      type: string
+                      example: "Hard assignment group"
+
   # COURSE
   /programs/courses:
     get:
@@ -2723,6 +2880,70 @@ components:
 
                 # TODO: add comments?
 
+    assignments:
+      type: object
+      description: Multiple course's assignments
+      properties:
+        assignments:
+          type: array
+          items:
+            type: object
+            properties:
+              assignment_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "Pre-test homework"
+              group_name:
+                type: string
+                example: "First group"
+              last_edit:
+                type: integer
+                example: 1231131
+              due_time:
+                type: integer
+                example: 1231231231
+              status:
+                type: string
+                example: "open | closed"
+              text:
+                type: string
+                example: "You must do this homework!!"
+    assignment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Pre-test homework"
+        group_name:
+          type: string
+          example: "First group"
+        last_edit:
+          type: integer
+          example: 1231131
+        due_time:
+          type: integer
+          example: 1231231231
+        status:
+          type: string
+          example: "open | closed"
+        text:
+          type: string
+          example: "You must do this homework!!"
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              attachment_type:
+                type: string
+                example: "image"
+              src:
+                type: string
+                example: "https://example-img.png"
+        # TODO: Add comments
+
     courses:
       type: object
       description: Multiple courses info.
@@ -3177,6 +3398,14 @@ components:
       in: path
       name: thread_id
       description: uniquely identify class's thread.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    assignmentID:
+      in: path
+      name: assignment_id
+      description: uniquely identify class's assignment.
       schema:
         type: string
         example: "1234"
