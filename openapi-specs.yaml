@@ -1286,6 +1286,24 @@ paths:
                   assignment_id:
                     type: string
                     example: "1234"
+  /programs/classes/{class_id}/assignments/{assignment_id}:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+    get:
+      tags:
+        - program
+      summary: Get specific class assignment.
+      description: |
+        For retrieving specific class's assignment
+      operationId: getClassAssignment
+      responses:
+        "200":
+          description: "OK: Get class's assignment"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assignment"
   /programs/classes/{class_id}/assignments/groups:
     parameters:
       - $ref: "#/components/parameters/classID"
@@ -1309,25 +1327,6 @@ paths:
                     items:
                       type: string
                       example: "Hard assignment group"
-
-  /programs/classes/{class_id}/assignments/{assignment_id}:
-    parameters:
-      - $ref: "#/components/parameters/classID"
-      - $ref: "#/components/parameters/assignmentID"
-    get:
-      tags:
-        - program
-      summary: Get specific class assignment.
-      description: |
-        For retrieving specific class's assignment
-      operationId: getClassAssignment
-      responses:
-        "200":
-          description: "OK: Get class's assignment"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/assignment"
 
   # COURSE
   /programs/courses:
