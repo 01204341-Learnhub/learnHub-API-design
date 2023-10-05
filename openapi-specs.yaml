@@ -48,6 +48,45 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/student"
+    post:
+      tags:
+        - user
+      summary: Add student
+      description: |
+        For creating student.
+      operationId: postStudent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                uid:
+                  type: string
+                  example: "123123213"
+                username:
+                  type: string
+                  example: "Paff"
+                email:
+                  type: string
+                  example: "myemail@gmail.com"
+                fullname:
+                  type: string
+                  example: "Firstname Lastname"
+                profile_pic:
+                  type: string
+                  example: "https://profile-pic.png"
+      responses:
+        "200":
+          description: "OK: Add student."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  student_id:
+                    type: string
+                    example: "12314"
+
   /users/students/{student_id}:
     get:
       tags:
@@ -491,11 +530,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "12121313"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "232"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -561,11 +600,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "1231"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "123"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -645,20 +684,16 @@ paths:
         content:
           application/json:
             schema:
-              minItems: 2
-              maxItems: 2
               required:
                 - type
+                - program_id
               properties:
                 type:
                   type: string
                   example: "class"
-                class_id:
+                program_id:
                   type: string
-                  example: "1234"
-                course_id:
-                  type: string
-                  example: "1234"
+                  example: "123"
       responses:
         "200":
           description: "OK: Add student basket item"
@@ -721,6 +756,104 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/teacher"
+    post:
+      tags:
+        - user
+      summary: Add teacher
+      description: |
+        For creating teacher.
+      operationId: postTeacher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                uid:
+                  type: string
+                  example: "123123213"
+                username:
+                  type: string
+                  example: "Paff"
+                email:
+                  type: string
+                  example: "myemail@gmail.com"
+                fullname:
+                  type: string
+                  example: "Firstname Lastname"
+                profile_pic:
+                  type: string
+                  example: "https://profile-pic.png"
+      responses:
+        "200":
+          description: "OK: Add teacher."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12314"
+  /users/teachers/{teacher_id}:
+    parameters:
+      - $ref: "#/components/parameters/teacherID"
+    get:
+      tags:
+        - user
+      summary: Get specific teacher basic information.
+      description: |
+        For retrieving specific teacher's profile.
+      operationId: getTeacher
+      responses:
+        "200":
+          description: "OK: List teachers."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/teacher"
+    patch:
+      tags:
+        - user
+      summary: Edit teacher
+      description: |
+        For editing teacher.
+      operationId: patchTeacher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                  example: "Paff"
+                fullname:
+                  type: string
+                  example: "Firstname Lastname"
+                profile_pic:
+                  type: string
+                  example: "https://profile-pic.png"
+      responses:
+        "200":
+          description: "OK: Edit teacher."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
+    delete:
+      tags:
+        - user
+      summary: Delete teacher
+      description: |
+        For removing teacher.
+      operationId: deleteTeacher
+      responses:
+        "200":
+          description: "OK: Delete teacher."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
+
   /users/teachers/{teacher_id}/programs:
     get:
       deprecated: true
@@ -869,11 +1002,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "1233"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "123"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -936,11 +1069,11 @@ paths:
                   type: string
                   example: "kbank_debit"
                 card_number:
-                  type: integer
-                  example: 12121313
+                  type: string
+                  example: "1231"
                 cvc:
-                  type: integer
-                  example: 232
+                  type: string
+                  example: "12313"
                 expiration_date:
                   type: string
                   example: "08/25"
@@ -960,6 +1093,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+
+  # PROGRAMS
   /programs:
     get:
       tags:
@@ -975,6 +1110,50 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/programs"
+
+  /program/tags:
+    get:
+      tags:
+        - program
+      summary: For listing program's tags
+      operationId: listProgramTags
+      responses:
+        "200":
+          description: "OK: List all tags"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/tag"
+    post:
+      tags:
+        - program
+      summary: For adding program's tag
+      operationId: postProgramTag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag_name:
+                  type: string
+                  example: "python"
+      responses:
+        "200":
+          description: "OK: Post tag"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tag_id:
+                    type: string
+                    example: "1234"
 
   # CLASS
   /programs/classes:
@@ -1527,9 +1706,6 @@ paths:
                   items:
                     type: object
                     properties:
-                      attachment_type:
-                        type: string
-                        example: "image"
                       src:
                         type: string
                         example: "https://example-img.png"
@@ -1578,6 +1754,9 @@ paths:
             schema:
               type: object
               properties:
+                name:
+                  type: string
+                  example: "New name"
                 text:
                   type: string
                   example: "hello students"
@@ -1586,10 +1765,13 @@ paths:
                   items:
                     type: object
                     properties:
-                      attachment_type:
+                      op:
                         type: string
-                        example: "image"
-                      src:
+                        example: "add | delete | edit"
+                      old_src:
+                        type: string
+                        example: "https://example-img-old.png"
+                      new_src:
                         type: string
                         example: "https://example-img.png"
       responses:
@@ -1605,6 +1787,101 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+
+  /quizzes:
+    post:
+      tags:
+        - quiz
+      summary: Add specific quiz.
+      description: |
+        For inserting quiz.
+      operationId: postQuiz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "quiz name"
+                description:
+                  type: string
+                  example: "quiz description"
+                time_limit:
+                  type: integer
+                  example: 12313
+                quiz_pic:
+                  type: string
+                  example: "https://example-pic.png"
+                problems:
+                  type: object
+                  properties:
+                    problem_num:
+                      type: integer
+                      example: 1
+                    question:
+                      type: string
+                      example: "When should you name are?"
+                    multiple_correct_answers:
+                      type: boolean
+                      example: false
+                    explanation:
+                      type: string
+                      example: "You are wrong!!!"
+                    choice:
+                      type: object
+                      properties:
+                        choice_a:
+                          type: string
+                          example: "a"
+                        choice_b:
+                          type: string
+                          example: "b"
+                        choice_c:
+                          type: string
+                          example: "c"
+                        choice_d:
+                          type: string
+                          example: "d"
+                        choice_e:
+                          type: string
+                          example: "e"
+                        choice_f:
+                          type: string
+                          example: "f"
+                    correct_answer:
+                      type: object
+                      properties:
+                        answer_a:
+                          type: boolean
+                          example: true
+                        answer_b:
+                          type: boolean
+                          example: false
+                        answer_c:
+                          type: boolean
+                          example: false
+                        answer_d:
+                          type: boolean
+                          example: false
+                        answer_e:
+                          type: boolean
+                          example: false
+                        answer_f:
+                          type: boolean
+                          example: false
+      responses:
+        "200":
+          description: "OK: post quiz"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quiz_id:
+                    type: string
+                    example: "2134"
 
   /quizzes/{quiz_id}:
     parameters:
@@ -1690,6 +1967,39 @@ paths:
                 properties:
                   answer_responses:
                     $ref: "#/components/schemas/quiz_answer_responses"
+
+  /transactions/course/purchase:
+    post:
+      tags:
+        - transaction
+      summary: Make purchase transaction
+      description: |
+        Make purchase transaction
+      operationId: postCoursePurchase
+      requestBody:
+        description: Course to purchase
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  example: "1234"
+                payment_method_id:
+                  type: string
+                  example: "1234"
+      responses:
+        "200":
+          description: "OK: Make purchases."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction_id:
+                    type: string
+                    example: "1234"
 
 components:
   responses:
@@ -1800,11 +2110,11 @@ components:
           type: string
           example: "kbank_debit"
         card_number:
-          type: integer
-          example: 12121313
+          type: string
+          example: "1231"
         cvc:
-          type: integer
-          example: 232
+          type: string
+          example: "12332"
         expiration_date:
           type: string
           example: "08/25"
@@ -1824,6 +2134,9 @@ components:
         student_id:
           type: string
           example: "123456789"
+        uid:
+          type: string
+          example: "133123123"
         username:
           type: string
           example: "foo-bar"
@@ -1870,6 +2183,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister teacher"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               progress:
                 type: number
                 example: 100
@@ -1899,6 +2215,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         chapters:
           type: array
           items:
@@ -1944,6 +2263,9 @@ components:
               teacher_name:
                 type: string
                 example: "Mister teacher"
+              profile_pic:
+                type: string
+                example: "https://profile-pic.png"
     studentClass:
       type: object
       required:
@@ -1973,6 +2295,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         # TODO: add threads
 
     studentCourseProgress:
@@ -2080,28 +2405,50 @@ components:
           example: "Intro to physics"
     studentBasketItem:
       type: object
-      minItems: 4
-      maxItems: 4
       required:
+        - basket_item_id
         - name
         - type
+        - teacher
         - price
+        - program_id
       properties:
         basket_item_id:
+          type: string
+          example: "1234"
+        type:
+          type: string
+          example: "class"
+        program_id:
           type: string
           example: "1234"
         name:
           type: string
           example: "discreet math"
-        type:
+        teacher:
+          type: object
+          properties:
+            teacher_name:
+              type: string
+              example: "Brown Sugar"
+            teacher_id:
+              type: string
+              example: "1234"
+        program_pic:
           type: string
-          example: "class"
-        class_id:
+          example: "https://local-picture.com"
+        rating:
+          type: number
+          example: 20.2
+        review_count:
+          type: integer
+          example: 30
+        total_video_length:
+          type: integer
+          example: 123123
+        difficulty_level:
           type: string
-          example: "123"
-        course_id:
-          type: string
-          example: "123"
+          example: "hard"
         price:
           type: number
           example: 1200.2
@@ -2115,6 +2462,9 @@ components:
         - fullname
         - profile_pic
       properties:
+        uid:
+          type: string
+          example: "123132213"
         teacher_id:
           type: string
           example: "123456789"
@@ -2185,6 +2535,16 @@ components:
                 example: 10000
 
     # PROGRAMS SCHEMAS
+
+    tag:
+      type: object
+      properties:
+        tag_id:
+          type: string
+          example: "1234"
+        tag_name:
+          type: string
+          example: "python"
     programs:
       type: object
       description: Multiple programs info.
@@ -2233,6 +2593,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister B"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               status:
                 type: string
                 example: "finished | not started | started"
@@ -2276,6 +2639,9 @@ components:
             teacher_name:
               type: string
               example: "Mister B"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         tags:
           type: array
           items:
@@ -2349,6 +2715,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister foo"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               last_edit:
                 type: integer
                 example: 1213123
@@ -2368,6 +2737,9 @@ components:
             teacher_name:
               type: string
               example: "Mister foo"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         last_edit:
           type: integer
           example: 1213123
@@ -2485,6 +2857,9 @@ components:
                   teacher_name:
                     type: string
                     example: "Mister foo"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               tags:
                 type: array
                 items:
@@ -2564,6 +2939,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         price:
           type: number
           example: 100
@@ -2701,6 +3079,9 @@ components:
             teacher_name:
               type: string
               example: "Mister teacher"
+            profile_pic:
+              type: string
+              example: "https://profile-pic.png"
         name:
           type: string
           example: "Annoucement a"
