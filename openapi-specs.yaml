@@ -1241,6 +1241,51 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/assignments"
+    post:
+      tags:
+        - program
+      summary: Post class's assignments.
+      description: |
+        For creating class's assignments
+      operationId: postClassAssignments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Assignment's name"
+                group_name:
+                  type: string
+                  example: "If group_name already existed assign assignment to that group \nelse create new group"
+                due_time:
+                  type: integer
+                  example: 1233
+                text:
+                  type: string
+                  example: "You must do this homework!!"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          description: "OK: Add class's assigment"
+          content:
+            application/json:
+              schema:
+                required:
+                  - assignment_id
+                properties:
+                  assignment_id:
+                    type: string
+                    example: "1234"
 
   /programs/classes/{class_id}/assignments/{assignment_id}:
     parameters:
@@ -2760,17 +2805,6 @@ components:
 
                 # TODO: add comments?
 
-    assignment_group:
-      type: object
-      description: Group a assignment belonged to
-      properties:
-        group_name:
-          type: string
-          example: "chapter1-assignment"
-        group_id:
-          type: string
-          example: "1234"
-
     assignments:
       type: object
       description: Multiple course's assignments
@@ -2786,8 +2820,9 @@ components:
               name:
                 type: string
                 example: "Pre-test homework"
-              group:
-                $ref: "#/components/schemas/assignment_group"
+              group_name:
+                type: string
+                example: "First group"
               last_edit:
                 type: integer
                 example: 1231131
@@ -2806,8 +2841,9 @@ components:
         name:
           type: string
           example: "Pre-test homework"
-        group:
-          $ref: "#/components/schemas/assignment_group"
+        group_name:
+          type: string
+          example: "First group"
         last_edit:
           type: integer
           example: 1231131
