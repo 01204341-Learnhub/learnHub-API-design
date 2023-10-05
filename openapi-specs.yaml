@@ -1286,6 +1286,29 @@ paths:
                   assignment_id:
                     type: string
                     example: "1234"
+  /programs/classes/{class_id}/assignments/groups:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - program
+      summary: List specific class assignment's groups.
+      description: |
+        For listing specific class's assignment groups
+      operationId: listClassAssignmentGroups
+      responses:
+        "200":
+          description: "OK: List class's assignment group"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assignment_groups:
+                    type: array
+                    items:
+                      type: string
+                      example: "Hard assignment group"
 
   /programs/classes/{class_id}/assignments/{assignment_id}:
     parameters:
