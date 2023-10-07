@@ -167,7 +167,7 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/studentAchievement"
-  /users/students/{student_id}/programs:
+  /users/students/{student_id}/dashboard:
     get:
       deprecated: true
       tags:
@@ -195,7 +195,7 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/userClass"
-  /users/students/{student_id}/programs/classes:
+  /users/students/{student_id}/classes:
     parameters:
       - $ref: "#/components/parameters/studentID"
     get:
@@ -217,7 +217,7 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/studentClasses"
-  /user/students/{student_id}/programs/classes/{class_id}:
+  /user/students/{student_id}/classes/{class_id}:
     parameters:
       - $ref: "#/components/parameters/studentID"
       - $ref: "#/components/parameters/classID"
@@ -235,7 +235,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentClass"
 
-  /user/students/{student_id}/programs/classes/{class_id}/progress:
+  /user/students/{student_id}/class_progress/{class_id}:
     parameters:
       - $ref: "#/components/parameters/studentID"
       - $ref: "#/components/parameters/classID"
@@ -253,7 +253,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentClassProgress"
 
-  /users/students/{student_id}/programs/courses:
+  /users/students/{student_id}/courses:
     parameters:
       - $ref: "#/components/parameters/studentID"
     get:
@@ -270,7 +270,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/studentCourses"
-  /users/students/{student_id}/programs/courses/{course_id}:
+  /users/students/{student_id}/courses/{course_id}:
     parameters:
       - $ref: "#/components/parameters/studentID"
       - $ref: "#/components/parameters/courseID"
@@ -289,7 +289,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentCourse"
 
-  /users/students/{student_id}/programs/courses/{course_id}/progress:
+  /users/students/{student_id}/course_progress/{course_id}:
     parameters:
       - $ref: "#/components/parameters/studentID"
       - $ref: "#/components/parameters/courseID"
@@ -854,7 +854,7 @@ paths:
               schema:
                 $ref: "#/components/responses/OK"
 
-  /users/teachers/{teacher_id}/programs:
+  /users/teachers/{teacher_id}/dashboard:
     get:
       deprecated: true
       tags:
@@ -882,7 +882,7 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/userClass"
-  /users/teachers/{teacher_id}/programs/classes:
+  /users/teachers/{teacher_id}/classes:
     get:
       tags:
         - user
@@ -898,7 +898,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/teacherClasses"
-  /users/teachers/{teacher_id}/programs/courses:
+  /users/teachers/{teacher_id}/courses:
     get:
       tags:
         - user
