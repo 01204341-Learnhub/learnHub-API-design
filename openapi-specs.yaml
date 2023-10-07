@@ -2291,9 +2291,6 @@ components:
               name:
                 type: string
                 example: "course foo"
-              status:
-                type: string
-                example: "finished | not started | started"
               teacher:
                 type: object
                 properties:
