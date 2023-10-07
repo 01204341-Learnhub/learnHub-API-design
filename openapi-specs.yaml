@@ -1694,7 +1694,9 @@ paths:
         For adding a course's lesson.
       operationId: postCourseLesson
       requestBody:
-        description: Lesson to add to course.
+        description: |
+          Lesson to add to course. 
+          Either quiz_id or src is required.
         required: true
         content:
           application/json:
@@ -1708,6 +1710,9 @@ paths:
                 src:
                   type: string
                   example: "https://example-video.mp4"
+                quiz_id:
+                  type: string
+                  example: "12313"
                 lesson_length:
                   type: integer
                   example: 10000
@@ -1935,62 +1940,64 @@ paths:
                   type: string
                   example: "https://example-pic.png"
                 problems:
-                  type: object
-                  properties:
-                    problem_num:
-                      type: integer
-                      example: 1
-                    question:
-                      type: string
-                      example: "When should you name are?"
-                    multiple_correct_answers:
-                      type: boolean
-                      example: false
-                    explanation:
-                      type: string
-                      example: "You are wrong!!!"
-                    choice:
-                      type: object
-                      properties:
-                        choice_a:
-                          type: string
-                          example: "a"
-                        choice_b:
-                          type: string
-                          example: "b"
-                        choice_c:
-                          type: string
-                          example: "c"
-                        choice_d:
-                          type: string
-                          example: "d"
-                        choice_e:
-                          type: string
-                          example: "e"
-                        choice_f:
-                          type: string
-                          example: "f"
-                    correct_answer:
-                      type: object
-                      properties:
-                        answer_a:
-                          type: boolean
-                          example: true
-                        answer_b:
-                          type: boolean
-                          example: false
-                        answer_c:
-                          type: boolean
-                          example: false
-                        answer_d:
-                          type: boolean
-                          example: false
-                        answer_e:
-                          type: boolean
-                          example: false
-                        answer_f:
-                          type: boolean
-                          example: false
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      problem_num:
+                        type: integer
+                        example: 1
+                      question:
+                        type: string
+                        example: "When should you name are?"
+                      multiple_correct_answers:
+                        type: boolean
+                        example: false
+                      explanation:
+                        type: string
+                        example: "You are wrong!!!"
+                      choice:
+                        type: object
+                        properties:
+                          choice_a:
+                            type: string
+                            example: "a"
+                          choice_b:
+                            type: string
+                            example: "b"
+                          choice_c:
+                            type: string
+                            example: "c"
+                          choice_d:
+                            type: string
+                            example: "d"
+                          choice_e:
+                            type: string
+                            example: "e"
+                          choice_f:
+                            type: string
+                            example: "f"
+                      correct_answer:
+                        type: object
+                        properties:
+                          answer_a:
+                            type: boolean
+                            example: true
+                          answer_b:
+                            type: boolean
+                            example: false
+                          answer_c:
+                            type: boolean
+                            example: false
+                          answer_d:
+                            type: boolean
+                            example: false
+                          answer_e:
+                            type: boolean
+                            example: false
+                          answer_f:
+                            type: boolean
+                            example: false
       responses:
         "200":
           description: "OK: post quiz"
@@ -3139,6 +3146,7 @@ components:
             example: 12000000
     lesson:
       type: object
+      description: "either src or quiz_id is required"
       properties:
         lesson_id:
           type: string
@@ -3158,6 +3166,9 @@ components:
         src:
           type: string
           example: "https://example-video.mp4"
+        quiz_id:
+          type: string
+          example: "1234"
     announcements:
       type: array
       items:
