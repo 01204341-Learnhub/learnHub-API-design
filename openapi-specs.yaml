@@ -1230,7 +1230,7 @@ paths:
                       end:
                         type: integer
                         example: "1231232131"
-                open_time:
+                open_date:
                   type: integer
                   example: "1231233"
                 registration_ended_date:
@@ -1335,7 +1335,7 @@ paths:
                     end:
                       type: integer
                       example: "12312112323"
-                open_time:
+                open_date:
                   type: integer
                   example: "1231233"
                 registration_ended_date:
@@ -2893,7 +2893,7 @@ components:
               registration_ended_date:
                 type: integer
                 example: 123123
-              open_time:
+              open_date:
                 type: integer
                 example: 123123
               class_ended_date:
@@ -2959,7 +2959,7 @@ components:
         registration_ended_date:
           type: integer
           example: 123123
-        open_time:
+        open_date:
           type: integer
           example: 123123
         class_ended_date:
