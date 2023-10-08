@@ -1695,8 +1695,7 @@ paths:
       operationId: postCourseLesson
       requestBody:
         description: |
-          Lesson to add to course. 
-          Either quiz_id or src is required.
+          Lesson to add to course.
         required: true
         content:
           application/json:
@@ -1710,9 +1709,9 @@ paths:
                 src:
                   type: string
                   example: "https://example-video.mp4"
-                quiz_id:
+                lesson_type:
                   type: string
-                  example: "12313"
+                  example: "video | file | doc | quiz"
                 lesson_length:
                   type: integer
                   example: 10000
@@ -3140,13 +3139,12 @@ components:
             example: "first lesson"
           lesson_type:
             type: string
-            example: "video"
+            example: "video | file | doc | quiz"
           lesson_length:
             type: integer
             example: 12000000
     lesson:
       type: object
-      description: "either src or quiz_id is required"
       properties:
         lesson_id:
           type: string
@@ -3159,16 +3157,13 @@ components:
           example: "first lesson"
         lesson_type:
           type: string
-          example: "video"
+          example: "video | file | doc | quiz"
         lesson_length:
           type: integer
           example: 12000000
         src:
           type: string
           example: "https://example-video.mp4"
-        quiz_id:
-          type: string
-          example: "1234"
     announcements:
       type: array
       items:
