@@ -1297,26 +1297,32 @@ paths:
                   type: string
                   example: "This class teach .."
                 class_objective:
-                  type: object
-                  properties:
-                    op:
-                      type: string
-                      example: "add | delete"
-                    objective:
-                      type: string
-                      example: "good objective"
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | remove | edit | swap"
+                      old:
+                        type: string
+                        example: "good objective"
+                      value:
+                        type: string
+                        example: "bad objective"
+
                 class_requirement:
                   type: string
                   example: "Required adobe photoshop"
                 difficulty_level:
                   type: string
                   example: "very hard"
-                tags:
+                tag_ids:
                   type: object
                   properties:
                     op:
                       type: string
-                      example: "add | delete"
+                      example: "add | remove"
                     tag_id:
                       type: string
                       example: "1234"
@@ -1499,7 +1505,7 @@ paths:
                     properties:
                       op:
                         type: string
-                        example: "add | delete | edit"
+                        example: "add | remove | edit"
                       old_src:
                         type: string
                         example: "https://example-img-old.png"
