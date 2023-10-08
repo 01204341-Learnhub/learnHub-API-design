@@ -1171,6 +1171,88 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/classes"
+    post:
+      tags:
+        - program
+      summary: Add class.
+      description: |
+        For creating class.
+      operationId: postClass
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "basic class"
+                class_pic:
+                  type: string
+                  example: "https://example-pic.com"
+                teacher_id:
+                  type: string
+                  example: "123123"
+                max_student:
+                  type: integer
+                  example: 30
+                price:
+                  type: number
+                  example: 3.5
+                class_objective:
+                  type: array
+                  items:
+                    type: string
+                    example: "Objective a"
+                class_requirement:
+                  type: string
+                  example: "Required adobe photoshop"
+                difficulty_level:
+                  type: string
+                  example: "very hard"
+                tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      tag_id:
+                        type: string
+                        example: "1234"
+                      tag_name:
+                        type: string
+                        example: "Neural Network"
+                schedules:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      start:
+                        type: integer
+                        example: "12312112323"
+                      end:
+                        type: integer
+                        example: "1231232131"
+                open_time:
+                  type: integer
+                  example: "1231233"
+                registration_ended_date:
+                  type: integer
+                  example: "1231233"
+                class_ended_date:
+                  type: integer
+                  example: "1231233"
+      responses:
+        "200":
+          description: "OK: Post class"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  class_id:
+                    type: string
+                    example: "1234"
+
   /programs/classes/{class_id}:
     parameters:
       - $ref: "#/components/parameters/classID"
@@ -2736,6 +2818,12 @@ components:
               registration_ended_date:
                 type: integer
                 example: 123123
+              open_time:
+                type: integer
+                example: 123123
+              class_ended_date:
+                type: integer
+                example: 12391
               price:
                 type: number
                 example: 3.5
@@ -2779,7 +2867,21 @@ components:
         status:
           type: string
           example: "finished | not started | started"
+        schedules:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: integer
+                example: "12312112323"
+              end:
+                type: integer
+                example: "1231232131"
         registration_ended_date:
+          type: integer
+          example: 123123
+        open_time:
           type: integer
           example: 123123
         class_ended_date:
