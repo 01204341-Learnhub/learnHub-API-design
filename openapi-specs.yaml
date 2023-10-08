@@ -1311,16 +1311,14 @@ paths:
                   type: string
                   example: "very hard"
                 tags:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      op:
-                        type: string
-                        example: "add | delete"
-                      tag_id:
-                        type: string
-                        example: "1234"
+                  type: object
+                  properties:
+                    op:
+                      type: string
+                      example: "add | delete"
+                    tag_id:
+                      type: string
+                      example: "1234"
                 schedules:
                   type: object
                   properties:
@@ -1348,6 +1346,9 @@ paths:
                 class_ended_date:
                   type: integer
                   example: "1231233"
+      responses:
+        "200":
+          $ref: "#/components/responses/OK"
 
   /programs/classes/{class_id}/threads:
     parameters:
