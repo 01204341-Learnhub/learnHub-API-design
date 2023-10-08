@@ -1193,6 +1193,9 @@ paths:
                 teacher_id:
                   type: string
                   example: "123123"
+                description:
+                  type: string
+                  example: "This class teach .."
                 max_student:
                   type: integer
                   example: 30
@@ -1295,6 +1298,9 @@ paths:
                 price:
                   type: number
                   example: 3.5
+                description:
+                  type: string
+                  example: "This class teach .."
                 class_objective:
                   type: object
                   properties:
@@ -2933,6 +2939,9 @@ components:
             profile_pic:
               type: string
               example: "https://profile-pic.png"
+        description:
+          type: string
+          example: "This class teach .."
         tags:
           type: array
           items:
