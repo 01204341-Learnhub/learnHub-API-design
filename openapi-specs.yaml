@@ -1304,7 +1304,7 @@ paths:
                       example: "add | delete"
                     objective:
                       type: string
-                      example: "good objective (add doesn't required)"
+                      example: "good objective"
                 class_requirement:
                   type: string
                   example: "Required adobe photoshop"
