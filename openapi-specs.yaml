@@ -1213,7 +1213,7 @@ paths:
                 difficulty_level:
                   type: string
                   example: "very hard"
-                tags:
+                tag_ids:
                   type: array
                   items:
                     type: string
@@ -1317,7 +1317,7 @@ paths:
                 difficulty_level:
                   type: string
                   example: "very hard"
-                tag_ids:
+                tag:
                   type: object
                   properties:
                     op:
@@ -1331,17 +1331,11 @@ paths:
                   properties:
                     op:
                       type: string
-                      example: "add | remove | edit"
-                    old_start:
+                      example: "add | remove"
+                    start:
                       type: integer
                       example: "12312112323"
-                    old_end:
-                      type: integer
-                      example: "1231232131"
-                    new_start:
-                      type: integer
-                      example: "12312112323"
-                    new_end:
+                    end:
                       type: integer
                       example: "12312112323"
                 open_time:
@@ -1664,7 +1658,7 @@ paths:
                 description:
                   type: string
                   example: "Redstone course"
-                tag_ids:
+                tag:
                   type: object
                   properties:
                     op:
