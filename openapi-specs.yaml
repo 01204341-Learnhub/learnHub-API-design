@@ -1516,6 +1516,110 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+  /programs/classes/{class_id}/assignments/{assignment_id}/submit:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+    put:
+      tags:
+        - program
+      summary: Submit assignments.
+      description: |
+        For submitting specific class's assignment
+      operationId: postClassAssignmentSubmit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  example: "1234"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | delete"
+                      src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          description: "OK: put assignment submission"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  submission_id:
+                    type: string
+                    example: "1234"
+
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+    get:
+      tags:
+        - program
+      summary: Get assignment's submissions.
+      description: |
+        For retrieving specific assignment's submissions
+      operationId: listClassAssignmentSubmissions
+      responses:
+        "200":
+          description: "OK: List submissions"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/submissions"
+
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{submission_id}:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+      - $ref: "#/components/parameters/submissionID"
+    get:
+      tags:
+        - program
+      summary: Get specific assignment's submission.
+      description: |
+        For retrieving specific assignment's submission
+      operationId: getClassAssignmentSubmission
+      responses:
+        "200":
+          description: "OK: Get submissions"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/submission"
+    patch:
+      tags:
+        - program
+      summary: Check(Give score) to student's submission.
+      description: |
+        For checking specific assignment's submission
+      operationId: patchClassAssignmentSubmission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                score:
+                  type: number
+                  example: 100
+      responses:
+        "200":
+          description: "OK: Patch submissions"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
 
   /programs/classes/{class_id}/assignments/groups:
     parameters:
@@ -3126,6 +3230,63 @@ components:
                 type: string
                 example: "https://example-img.png"
         # TODO: Add comments
+    #
+    submissions:
+      type: array
+      items:
+        type: object
+        properties:
+          submission_id:
+            type: string
+            example: "1234"
+          status:
+            type: string
+            example: "check | uncheck | unsubmit"
+          score:
+            type: integer
+            example: 100
+          student:
+            type: object
+            properties:
+              student_id:
+                type: string
+                example: "1234"
+              student_name:
+                type: string
+                example: "Paff"
+              profile_pic:
+                type: string
+                example: "https://picture.png"
+
+    submission:
+      type: object
+      properties:
+        student:
+          type: object
+          properties:
+            student_id:
+              type: string
+              example: "1234"
+            student_name:
+              type: string
+              example: "Paff"
+            profile_pic:
+              type: string
+              example: "https://picture.png"
+        score:
+          type: integer
+          example: 100
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              op:
+                type: string
+                example: "add | delete"
+              src:
+                type: string
+                example: "https://example-img.png"
 
     courses:
       type: object
@@ -3621,6 +3782,14 @@ components:
       in: path
       name: quiz_id
       description: uniquely identify quiz.
+      schema:
+        type: string
+        example: "1234"
+      required: true
+    submissionID:
+      in: path
+      name: submission_id
+      description: uniquely identify assignment's submission.
       schema:
         type: string
         example: "1234"
