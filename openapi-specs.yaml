@@ -1304,9 +1304,6 @@ paths:
                       op:
                         type: string
                         example: "add | remove"
-                      old:
-                        type: string
-                        example: "good objective"
                       value:
                         type: string
                         example: "bad objective"
@@ -1675,9 +1672,6 @@ paths:
                       op:
                         type: string
                         example: "add | remove"
-                      old:
-                        type: string
-                        example: "Master Python"
                       value:
                         type: string
                         example: "Master CPP"
