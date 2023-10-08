@@ -1216,14 +1216,9 @@ paths:
                 tags:
                   type: array
                   items:
-                    type: object
-                    properties:
-                      tag_id:
-                        type: string
-                        example: "1234"
-                      tag_name:
-                        type: string
-                        example: "Neural Network"
+                    type: string
+                    description: "list of tags id"
+                    example: "1234"
                 schedules:
                   type: array
                   items:
