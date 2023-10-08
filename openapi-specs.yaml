@@ -1270,6 +1270,85 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/class"
+    patch:
+      tags:
+        - program
+      summary: Edit class.
+      description: |
+        For editing class.
+      operationId: patchClass
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "basic class"
+                class_pic:
+                  type: string
+                  example: "https://example-pic.com"
+                max_student:
+                  type: integer
+                  example: 30
+                price:
+                  type: number
+                  example: 3.5
+                class_objective:
+                  type: object
+                  properties:
+                    op:
+                      type: string
+                      example: "add | delete"
+                    objective:
+                      type: string
+                      example: "good objective (add doesn't required)"
+                class_requirement:
+                  type: string
+                  example: "Required adobe photoshop"
+                difficulty_level:
+                  type: string
+                  example: "very hard"
+                tags:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | delete"
+                      tag_id:
+                        type: string
+                        example: "1234"
+                schedules:
+                  type: object
+                  properties:
+                    op:
+                      type: string
+                      example: "add | remove | edit"
+                    old_start:
+                      type: integer
+                      example: "12312112323"
+                    old_end:
+                      type: integer
+                      example: "1231232131"
+                    new_start:
+                      type: integer
+                      example: "12312112323"
+                    new_end:
+                      type: integer
+                      example: "12312112323"
+                open_time:
+                  type: integer
+                  example: "1231233"
+                registration_ended_date:
+                  type: integer
+                  example: "1231233"
+                class_ended_date:
+                  type: integer
+                  example: "1231233"
+
   /programs/classes/{class_id}/threads:
     parameters:
       - $ref: "#/components/parameters/classID"
