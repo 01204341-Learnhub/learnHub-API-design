@@ -1670,7 +1670,7 @@ paths:
                     op:
                       type: string
                       example: "add | remove"
-                    value:
+                    tag_id:
                       type: string
                       example: "1234"
                 course_objective:
