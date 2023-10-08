@@ -1303,7 +1303,7 @@ paths:
                     properties:
                       op:
                         type: string
-                        example: "add | remove | edit | swap"
+                        example: "add | remove"
                       old:
                         type: string
                         example: "good objective"
@@ -1680,7 +1680,7 @@ paths:
                     properties:
                       op:
                         type: string
-                        example: "add | remove | edit | swap"
+                        example: "add | remove"
                       old:
                         type: string
                         example: "Master Python"
