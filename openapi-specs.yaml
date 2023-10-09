@@ -1564,6 +1564,9 @@ paths:
                 name:
                   type: string
                   example: "Assignment name"
+                group_name:
+                  type: string
+                  example: "group_name"
                 due_date:
                   type: integer
                   example: 123131
