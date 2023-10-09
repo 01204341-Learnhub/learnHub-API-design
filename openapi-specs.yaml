@@ -234,6 +234,22 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/studentClass"
+  /user/students/{student_id}/class_assignments:
+    parameters:
+      - $ref: "#/components/parameters/studentID"
+    get:
+      tags:
+        - user
+      summary: Get specific student's class assignment
+      description: For retrieving specific student's class assignment
+      operationId: getStudentClassAssignments
+      responses:
+        "200":
+          description: "OK: Get student's class assignment."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/studentAssignment"
 
   /user/students/{student_id}/class_progress/{class_id}:
     parameters:
@@ -242,7 +258,7 @@ paths:
     get:
       tags:
         - user
-      summary: Get specific studen's class progress.
+      summary: Get specific student's class progress.
       description: For retrieving specific student's class progress.
       operationId: getStudentClassProgress
       responses:
@@ -1507,6 +1523,9 @@ paths:
                 text:
                   type: string
                   example: "You must do this homework!!"
+                max_score:
+                  type: number
+                  example: 100
                 attachments:
                   type: array
                   items:
@@ -2791,6 +2810,41 @@ components:
               type: string
               example: "https://profile-pic.png"
         # TODO: add threads
+    studentAssignment:
+      type: object
+      properties:
+        assignments:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "assignment_name"
+              class:
+                type: object
+                properties:
+                  class_id:
+                    type: string
+                    example: "1234"
+                  class_name:
+                    type: string
+                    example: "class_name"
+              group_name:
+                type: string
+                example: "group_name"
+              status:
+                type: string
+                example: "open | closed"
+              submission:
+                type: object
+                properties:
+                  submission_status:
+                    type: string
+                    example: "check | uncheck | unsubmit"
+                  submission_date:
+                    type: integer
+                    example: 123123
 
     studentCourseProgress:
       type: object
@@ -3302,6 +3356,9 @@ components:
               status:
                 type: string
                 example: "open | closed"
+              max_score:
+                type: number
+                example: 100
               text:
                 type: string
                 example: "You must do this homework!!"
@@ -3323,6 +3380,9 @@ components:
         status:
           type: string
           example: "open | closed"
+        max_score:
+          type: number
+          example: 100
         text:
           type: string
           example: "You must do this homework!!"
