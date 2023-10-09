@@ -1628,6 +1628,9 @@ paths:
                   items:
                     type: object
                     properties:
+                      attachment_type:
+                        type: string
+                        example: "image"
                       src:
                         type: string
                         example: "https://example-img.png"
@@ -3386,9 +3389,9 @@ components:
           items:
             type: object
             properties:
-              op:
+              attachment_type:
                 type: string
-                example: "add | delete"
+                example: "image"
               src:
                 type: string
                 example: "https://example-img.png"
