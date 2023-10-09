@@ -2821,7 +2821,7 @@ components:
               name:
                 type: string
                 example: "assignment_name"
-              class:
+              class_info:
                 type: object
                 properties:
                   class_id:
