@@ -1642,7 +1642,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/submission"
-  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/check:
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/score:
     parameters:
       - $ref: "#/components/parameters/classID"
       - $ref: "#/components/parameters/assignmentID"
@@ -1650,10 +1650,10 @@ paths:
     patch:
       tags:
         - program
-      summary: Patch student's submission.
+      summary: Patch student's submission score.
       description: |
-        For specific assignment's submission
-      operationId: patchClassAssignmentSubmission
+        For specific assignment's submission score
+      operationId: patchClassAssignmentSubmissionScore
       requestBody:
         content:
           application/json:
