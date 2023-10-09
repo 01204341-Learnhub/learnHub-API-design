@@ -1603,10 +1603,11 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
-  /programs/classes/{class_id}/assignments/{assignment_id}/submit:
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/submit:
     parameters:
       - $ref: "#/components/parameters/classID"
       - $ref: "#/components/parameters/assignmentID"
+      - $ref: "#/components/parameters/studentID"
     put:
       tags:
         - program
@@ -1620,9 +1621,6 @@ paths:
             schema:
               type: object
               properties:
-                student_id:
-                  type: string
-                  example: "1234"
                 attachments:
                   type: array
                   items:
@@ -1645,10 +1643,11 @@ paths:
                   student_id:
                     type: string
                     example: "1234"
-  /programs/classes/{class_id}/assignments/{assignment_id}/unsubmit:
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/unsubmit:
     parameters:
       - $ref: "#/components/parameters/classID"
       - $ref: "#/components/parameters/assignmentID"
+      - $ref: "#/components/parameters/studentID"
     patch:
       tags:
         - program
@@ -1656,15 +1655,6 @@ paths:
       description: |
         For unsubmitting specific class's assignment
       operationId: patchClassAssignmentUnsubmit
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                student_id:
-                  type: string
-                  example: "1234"
       responses:
         "200":
           description: "OK: patch assignment unsubmit"
