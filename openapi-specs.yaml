@@ -1636,6 +1636,24 @@ paths:
                   submission_id:
                     type: string
                     example: "1234"
+  /programs/classes/{class_id}/assignments/{assignment_id}/unsubmit:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+    patch:
+      tags:
+        - program
+      summary: Unsubmit assignments.
+      description: |
+        For unsubmitting specific class's assignment
+      operationId: patchClassAssignmentUnsubmit
+      responses:
+        "200":
+          description: "OK: patch assignment unsubmit"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
 
   /programs/classes/{class_id}/assignments/{assignment_id}/submissions:
     parameters:
@@ -1678,9 +1696,9 @@ paths:
     patch:
       tags:
         - program
-      summary: Check(Give score) to student's submission.
+      summary: Patch student's submission.
       description: |
-        For checking specific assignment's submission
+        For specific assignment's submission
       operationId: patchClassAssignmentSubmission
       requestBody:
         content:
@@ -3354,6 +3372,9 @@ components:
         score:
           type: integer
           example: 100
+        status:
+          type: string
+          example: "check | uncheck | unsubmit"
         attachments:
           type: array
           items:
