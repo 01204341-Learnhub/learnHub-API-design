@@ -1365,6 +1365,50 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/threads"
+    post:
+      tags:
+        - program
+      summary: Post class thread.
+      description: |
+        For creating class thread
+      operationId: postClassThreads
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Thread foo"
+                teacher_id:
+                  type: string
+                  example: "12312"
+                text:
+                  type: string
+                  example: "text"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      attachment_type:
+                        type: string
+                        example: "image | video | file | doc"
+                      src:
+                        type: string
+                        example: "content"
+      responses:
+        "200":
+          description: "OK: Get post class's thread"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  thread_id:
+                    type: string
+                    example: "1233"
   /programs/classes/{class_id}/threads/{thread_id}:
     parameters:
       - $ref: "#/components/parameters/classID"
@@ -1383,6 +1427,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/thread"
+    patch:
+      tags:
+        - program
+      summary: Patch class thread.
+      description: |
+        For patching class thread
+      operationId: patchClassThread
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "name"
+                text:
+                  type: string
+                  example: "text"
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                        example: "add | remove"
+                      src:
+                        type: string
+                        example: "content"
+      responses:
+        "200":
+          description: "OK: Get patch class's thread"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
 
   /programs/classes/{class_id}/assignments:
     parameters:
@@ -1496,13 +1577,10 @@ paths:
                     properties:
                       op:
                         type: string
-                        example: "add | remove | edit"
-                      old_src:
+                        example: "add | remove"
+                      src:
                         type: string
                         example: "https://example-img-old.png"
-                      new_src:
-                        type: string
-                        example: "https://example-img.png"
       responses:
         "200":
           $ref: "#/components/responses/OK"
