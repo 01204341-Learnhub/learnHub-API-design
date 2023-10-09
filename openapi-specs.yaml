@@ -1619,9 +1619,6 @@ paths:
                   items:
                     type: object
                     properties:
-                      op:
-                        type: string
-                        example: "add | delete"
                       src:
                         type: string
                         example: "https://example-img.png"
