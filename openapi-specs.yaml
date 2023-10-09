@@ -3336,28 +3336,31 @@ components:
         # TODO: Add comments
     #
     submissions:
-      type: array
-      items:
-        type: object
-        properties:
-          status:
-            type: string
-            example: "check | uncheck | unsubmit"
-          score:
-            type: integer
-            example: 100
-          student:
+      type: object
+      properties:
+        submissions:
+          type: array
+          items:
             type: object
             properties:
-              student_id:
+              status:
                 type: string
-                example: "1234"
-              student_name:
-                type: string
-                example: "Paff"
-              profile_pic:
-                type: string
-                example: "https://picture.png"
+                example: "check | uncheck | unsubmit"
+              score:
+                type: integer
+                example: 100
+              student:
+                type: object
+                properties:
+                  student_id:
+                    type: string
+                    example: "1234"
+                  student_name:
+                    type: string
+                    example: "Paff"
+                  profile_pic:
+                    type: string
+                    example: "https://picture.png"
 
     submission:
       type: object
