@@ -1501,7 +1501,7 @@ paths:
                 group_name:
                   type: string
                   example: "If group_name already existed assign assignment to that group \nelse create new group"
-                due_time:
+                due_date:
                   type: integer
                   example: 1233
                 text:
@@ -1561,7 +1561,7 @@ paths:
                 name:
                   type: string
                   example: "Assignment name"
-                due_time:
+                due_date:
                   type: integer
                   example: 123131
                 status:
@@ -3281,7 +3281,7 @@ components:
               last_edit:
                 type: integer
                 example: 1231131
-              due_time:
+              due_date:
                 type: integer
                 example: 1231231231
               status:
@@ -3302,7 +3302,7 @@ components:
         last_edit:
           type: integer
           example: 1231131
-        due_time:
+        due_date:
           type: integer
           example: 1231231231
         status:
