@@ -3413,6 +3413,9 @@ components:
               score:
                 type: integer
                 example: 100
+              submission_date:
+                type: integer
+                example: 123123
               student:
                 type: object
                 properties:
@@ -3447,6 +3450,9 @@ components:
         status:
           type: string
           example: "check | uncheck | unsubmit"
+        submission_date:
+          type: integer
+          example: 123123
         attachments:
           type: array
           items:
