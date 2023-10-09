@@ -1642,7 +1642,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  submission_id:
+                  student_id:
                     type: string
                     example: "1234"
   /programs/classes/{class_id}/assignments/{assignment_id}/unsubmit:
@@ -1692,11 +1692,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/submissions"
 
-  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{submission_id}:
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}:
     parameters:
       - $ref: "#/components/parameters/classID"
       - $ref: "#/components/parameters/assignmentID"
-      - $ref: "#/components/parameters/submissionID"
+      - $ref: "#/components/parameters/studentID"
     get:
       tags:
         - program
@@ -3350,7 +3350,7 @@ components:
       items:
         type: object
         properties:
-          submission_id:
+          student_id:
             type: string
             example: "1234"
           status:
@@ -3899,14 +3899,6 @@ components:
       in: path
       name: quiz_id
       description: uniquely identify quiz.
-      schema:
-        type: string
-        example: "1234"
-      required: true
-    submissionID:
-      in: path
-      name: submission_id
-      description: uniquely identify assignment's submission.
       schema:
         type: string
         example: "1234"
