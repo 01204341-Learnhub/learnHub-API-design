@@ -3340,9 +3340,6 @@ components:
       items:
         type: object
         properties:
-          student_id:
-            type: string
-            example: "1234"
           status:
             type: string
             example: "check | uncheck | unsubmit"
