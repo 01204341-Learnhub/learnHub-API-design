@@ -1603,65 +1603,6 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
-  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/submit:
-    parameters:
-      - $ref: "#/components/parameters/classID"
-      - $ref: "#/components/parameters/assignmentID"
-      - $ref: "#/components/parameters/studentID"
-    put:
-      tags:
-        - program
-      summary: Submit assignments.
-      description: |
-        For submitting specific class's assignment
-      operationId: postClassAssignmentSubmit
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                attachments:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      attachment_type:
-                        type: string
-                        example: "image"
-                      src:
-                        type: string
-                        example: "https://example-img.png"
-      responses:
-        "200":
-          description: "OK: put assignment submission"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  student_id:
-                    type: string
-                    example: "1234"
-  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/unsubmit:
-    parameters:
-      - $ref: "#/components/parameters/classID"
-      - $ref: "#/components/parameters/assignmentID"
-      - $ref: "#/components/parameters/studentID"
-    patch:
-      tags:
-        - program
-      summary: Unsubmit assignments.
-      description: |
-        For unsubmitting specific class's assignment
-      operationId: patchClassAssignmentUnsubmit
-      responses:
-        "200":
-          description: "OK: patch assignment unsubmit"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/responses/OK"
 
   /programs/classes/{class_id}/assignments/{assignment_id}/submissions:
     parameters:
@@ -1725,6 +1666,65 @@ paths:
               schema:
                 $ref: "#/components/responses/OK"
 
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/submit:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+      - $ref: "#/components/parameters/studentID"
+    put:
+      tags:
+        - program
+      summary: Submit assignments.
+      description: |
+        For submitting specific class's assignment
+      operationId: postClassAssignmentSubmit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attachments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      attachment_type:
+                        type: string
+                        example: "image"
+                      src:
+                        type: string
+                        example: "https://example-img.png"
+      responses:
+        "200":
+          description: "OK: put assignment submission"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  student_id:
+                    type: string
+                    example: "1234"
+  /programs/classes/{class_id}/assignments/{assignment_id}/submissions/{student_id}/unsubmit:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+      - $ref: "#/components/parameters/studentID"
+    patch:
+      tags:
+        - program
+      summary: Unsubmit assignments.
+      description: |
+        For unsubmitting specific class's assignment
+      operationId: patchClassAssignmentUnsubmit
+      responses:
+        "200":
+          description: "OK: patch assignment unsubmit"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
   /programs/classes/{class_id}/assignments/groups:
     parameters:
       - $ref: "#/components/parameters/classID"
