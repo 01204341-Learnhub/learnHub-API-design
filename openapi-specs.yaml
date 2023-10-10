@@ -3655,6 +3655,9 @@ components:
               course_pic:
                 type: string
                 example: "https://example-pic.com"
+              difficulty_level:
+                type: string
+                example: "hard"
     course:
       type: object
       description: A course info
