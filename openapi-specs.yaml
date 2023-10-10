@@ -2576,6 +2576,18 @@ components:
                   class_id:
                     type: string
                     example: "1234"
+              teacher:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12345"
+                  teacher_name:
+                    type: string
+                    example: "Mister teacher"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
               schedules:
                 type: array
                 items:
