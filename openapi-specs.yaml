@@ -239,24 +239,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/studentAssignment"
 
-  /user/students/{student_id}/class_progress/{class_id}:
-    parameters:
-      - $ref: "#/components/parameters/studentID"
-      - $ref: "#/components/parameters/classID"
-    get:
-      tags:
-        - user
-      summary: Get specific student's class progress.
-      description: For retrieving specific student's class progress.
-      operationId: getStudentClassProgress
-      responses:
-        "200":
-          description: "OK: Get student's class progress."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/studentClassProgress"
-
   /users/students/{student_id}/courses:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -874,18 +856,7 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                  - courses
-                  - classes
-                properties:
-                  courses:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/userCourse"
-                  classes:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/userClass"
+                $ref: "#/components/schemas/teacherDashboard"
   /users/teachers/{teacher_id}/classes:
     get:
       tags:
@@ -2890,9 +2861,6 @@ components:
           status:
             type: string
             example: "finished | not started | started"
-          progress:
-            type: number
-            example: 100
           class_ended_date:
             type: integer
             example: 12391
@@ -3158,6 +3126,75 @@ components:
           type: string
           example: "https://example/pic.png"
 
+    teacherDashboard:
+      type: object
+      properties:
+        courses:
+          type: array
+          items:
+            type: object
+            properties:
+              course_id:
+                type: string
+                example: "123456789"
+              name:
+                type: string
+                example: "basic course"
+              course_pic:
+                type: string
+                example: "https://example-pic.com"
+              tags:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tag_id:
+                      type: string
+                      example: "1234"
+                    tag_name:
+                      type: string
+                      example: "Neural Network"
+              rating:
+                type: number
+                example: 3.5
+              review_count:
+                type: integer
+                example: 300
+              price:
+                type: number
+                example: 3.5
+              difficulty_level:
+                type: string
+                example: "hard"
+        classes:
+          type: array
+          items:
+            type: object
+            properties:
+              class_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "basic class"
+              class_pic:
+                type: string
+                example: "https://example-pic.com"
+              status:
+                type: string
+                example: "finished | not started | started"
+              registration_ended_date:
+                type: integer
+                example: 123123
+              open_date:
+                type: integer
+                example: 123123
+              class_ended_date:
+                type: integer
+                example: 12391
+              price:
+                type: number
+                example: 3.5
     teacherCourses:
       properties:
         courses:
