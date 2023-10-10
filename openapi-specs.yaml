@@ -169,7 +169,6 @@ paths:
                       $ref: "#/components/schemas/studentAchievement"
   /users/students/{student_id}/dashboard:
     get:
-      deprecated: true
       tags:
         - user
       summary: Use for student's main dashboard.
@@ -183,18 +182,7 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                  - courses
-                  - classes
-                properties:
-                  courses:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/userCourse"
-                  classes:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/userClass"
+                $ref: "#/components/schemas/studentDashboard"
   /users/students/{student_id}/classes:
     parameters:
       - $ref: "#/components/parameters/studentID"
@@ -2571,6 +2559,108 @@ components:
           example: "Internal Server Error"
 
     # USER SCHEMAS
+    studentDashboard:
+      type: object
+      properties:
+        classes:
+          type: array
+          items:
+            type: object
+            properties:
+              class_info:
+                type: object
+                properties:
+                  class_name:
+                    type: string
+                    example: "class_name"
+                  class_id:
+                    type: string
+                    example: "1234"
+              schedules:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    start:
+                      type: integer
+                      example: "123132"
+                    end:
+                      type: integer
+                      example: "123132"
+        assignments:
+          type: array
+          items:
+            type: object
+            properties:
+              assignment_name:
+                type: string
+                example: "assignment_name"
+              assignment_id:
+                type: string
+                example: "1234"
+              class_info:
+                type: object
+                properties:
+                  class_name:
+                    type: string
+                    example: "class_name"
+                  class_id:
+                    type: string
+                    example: "1234"
+              due_date:
+                type: integer
+                example: 1234
+              status:
+                type: string
+                example: "open | closed"
+              submission:
+                type: object
+                properties:
+                  submission_status:
+                    type: string
+                    example: "check | uncheck | unsubmit"
+                  submission_date:
+                    type: integer
+                    example: 123123
+        announcements:
+          type: array
+          items:
+            type: object
+            properties:
+              announcement_id:
+                type: string
+                example: "1234"
+              course_info:
+                type: object
+                properties:
+                  course_id:
+                    type: string
+                    example: "11234"
+                  course_name:
+                    type: string
+                    example: "adbd"
+              teacher:
+                type: object
+                properties:
+                  teacher_id:
+                    type: string
+                    example: "12345"
+                  teacher_name:
+                    type: string
+                    example: "Mister teacher"
+                  profile_pic:
+                    type: string
+                    example: "https://profile-pic.png"
+              name:
+                type: string
+                example: "Annoucement a"
+              last_edit:
+                type: integer
+                example: 1233323
+              text:
+                type: string
+                example: "hello students"
+
     userCourse:
       type: object
       required:
