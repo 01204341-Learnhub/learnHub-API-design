@@ -1351,7 +1351,6 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
-
   /programs/classes/{class_id}/threads:
     parameters:
       - $ref: "#/components/parameters/classID"
@@ -1923,6 +1922,36 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+  /programs/courses/{course_id}/review:
+    parameters:
+      - $ref: "#/components/parameters/courseID"
+    patch:
+      tags:
+        - program
+      summary: Give specific course review.
+      description: |
+        For giving specific course review.
+      operationId: patchCourseReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  example: "1234"
+                rating:
+                  description: "give rating/5"
+                  type: number
+                  example: 4.5
+      responses:
+        "200":
+          description: "OK: Give course rating"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
   /programs/courses/{course_id}/students:
     parameters:
       - $ref: "#/components/parameters/courseID"
@@ -3455,6 +3484,15 @@ components:
               due_date:
                 type: integer
                 example: 1231231231
+              submission_count:
+                type: object
+                properties:
+                  submit_count:
+                    type: integer
+                    example: 10
+                  unsubmit_count:
+                    type: integer
+                    example: 10
               status:
                 type: string
                 example: "open | closed"
