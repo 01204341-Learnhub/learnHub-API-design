@@ -842,7 +842,6 @@ paths:
 
   /users/teachers/{teacher_id}/dashboard:
     get:
-      deprecated: true
       tags:
         - user
       summary: Teacher's main dashboard.
