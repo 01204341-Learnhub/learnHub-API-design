@@ -3142,17 +3142,6 @@ components:
               course_pic:
                 type: string
                 example: "https://example-pic.com"
-              tags:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    tag_id:
-                      type: string
-                      example: "1234"
-                    tag_name:
-                      type: string
-                      example: "Neural Network"
               rating:
                 type: number
                 example: 3.5
