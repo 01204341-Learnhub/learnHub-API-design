@@ -3376,10 +3376,7 @@ components:
         difficulty_level:
           type: string
           example: "very hard"
-        chapter_count:
-          type: integer
-          example: 15
-        meeting_count: # TODO: Meeting count required?
+        meeting_count:
           type: integer
           example: 15
         student_count:
