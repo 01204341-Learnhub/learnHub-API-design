@@ -372,18 +372,14 @@ paths:
         content:
           application/json:
             schema:
-              minItems: 2
-              maxItems: 2
               required:
                 - type
+                - program_id
               properties:
                 type:
                   type: string
                   example: "class"
-                class_id:
-                  type: string
-                  example: "1234"
-                course_id:
+                program_id:
                   type: string
                   example: "1234"
       responses:
@@ -395,7 +391,7 @@ paths:
                 required:
                   - wishlist-item-id
                 properties:
-                  wishlist-item-id:
+                  wishlist_item_id:
                     type: string
                     example: "1234"
   /users/students/{student_id}/wishlist/{wishlist_item_id}:
@@ -3020,12 +3016,9 @@ components:
         type:
           type: string
           example: "class"
-        class_id:
+        program_id:
           type: string
-          example: "123"
-        course_id:
-          type: string
-          example: "123"
+          example: "1234"
         price:
           type: number
           example: 1200.2
