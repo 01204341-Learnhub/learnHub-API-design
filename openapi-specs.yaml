@@ -3327,6 +3327,9 @@ components:
               price:
                 type: number
                 example: 3.5
+              difficulty_level:
+                type: string
+                example: "very hard"
 
     class:
       type: object
