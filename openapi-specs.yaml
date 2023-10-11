@@ -3228,9 +3228,19 @@ components:
               max_student:
                 type: integer
                 example: 10000
+              schedules:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    start:
+                      type: integer
+                      example: "12312112323"
+                    end:
+                      type: integer
+                      example: "1231232131"
 
     # PROGRAMS SCHEMAS
-
     tag:
       type: object
       properties:
