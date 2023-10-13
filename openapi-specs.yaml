@@ -3290,6 +3290,9 @@ components:
               price:
                 type: integer
                 example: 1234
+              purchase_time:
+                type: integer
+                example: 12344
 
     # PROGRAMS SCHEMAS
     tag:
