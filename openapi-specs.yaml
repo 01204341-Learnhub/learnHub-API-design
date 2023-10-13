@@ -885,6 +885,23 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/teacherCourses"
+  /users/teachers/{teacher_id}/incomes:
+    get:
+      tags:
+        - user
+      summary: List teacher's course and class sales.
+      description: |
+        For retrieving specific teacher's course and class sales.
+      operationId: listTeacherIncomes
+      parameters:
+        - $ref: "#/components/parameters/teacherID"
+      responses:
+        "200":
+          description: "OK: List teacher's course and class incomes."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/teacherIncomes"
   /users/teachers/{teacher_id}/config:
     get:
       tags:
@@ -3239,6 +3256,40 @@ components:
                     end:
                       type: integer
                       example: "1231232131"
+
+    # teacher incomes
+    teacherIncomes:
+      type: object
+      properties:
+        incomes:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                example: "course | class"
+              program_id:
+                type: string
+                example: "1234"
+              program_pic:
+                type: string
+                example: "https://example.png"
+              name:
+                type: string
+                example: "first class"
+              buyer:
+                type: object
+                properties:
+                  student_id:
+                    type: string
+                    example: "1234"
+                  student_name:
+                    type: string
+                    example: "1234"
+              price:
+                type: integer
+                example: 1234
 
     # PROGRAMS SCHEMAS
     tag:
