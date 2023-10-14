@@ -1334,6 +1334,23 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/OK"
+  /programs/classes/{class_id}/students:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+    get:
+      tags:
+        - program
+      summary: List class's students.
+      description: |
+        For listing class's students.
+      operationId: listClassStudents
+      responses:
+        "200":
+          description: "OK: List class's students"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/class_students"
   /programs/classes/{class_id}/threads:
     parameters:
       - $ref: "#/components/parameters/classID"
@@ -3473,6 +3490,25 @@ components:
         assignment_count:
           type: integer
           example: 20
+
+    class_students:
+      type: object
+      description: Multiple class's students
+      properties:
+        students:
+          type: array
+          items:
+            type: object
+            properties:
+              student_id:
+                type: string
+                example: "1234"
+              name:
+                type: string
+                example: "first last"
+              profile_pic:
+                type: string
+                example: "https://pic.png"
     threads:
       type: object
       description: Multiple class's threads
