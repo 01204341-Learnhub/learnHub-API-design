@@ -2235,6 +2235,9 @@ paths:
                   items:
                     type: object
                     properties:
+                      attachment_type:
+                        type: string
+                        example: "image | video | file | doc"
                       src:
                         type: string
                         example: "https://example-img.png"
