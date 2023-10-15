@@ -2674,6 +2674,9 @@ components:
                   class_id:
                     type: string
                     example: "1234"
+                  class_pic:
+                    type: string
+                    example: "https://pic.png"
               teacher:
                 type: object
                 properties:
