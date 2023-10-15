@@ -2965,6 +2965,17 @@ components:
           class_ended_date:
             type: integer
             example: 12391
+          schedules:
+            type: array
+            items:
+              type: object
+              properties:
+                start:
+                  type: integer
+                  example: "12312112323"
+                end:
+                  type: integer
+                  example: "1231232131"
           teacher:
             type: object
             properties:
