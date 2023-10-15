@@ -1467,6 +1467,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/OK"
+  /programs/classes/{class_id}/threads/{thread_id}/reply:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/threadID"
+    post:
+      tags:
+        - program
+      summary: post thread's reply.
+      description: |
+        For posting thread's reply
+      operationId: postClassThreadReply
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: "1234"
+                type:
+                  type: string
+                  example: "student | teacher"
+                text:
+                  type: string
+                  example: "text"
+      responses:
+        "200":
+          description: "OK: Post thread's reply"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
 
   /programs/classes/{class_id}/assignments:
     parameters:
@@ -1610,6 +1643,39 @@ paths:
         "200":
           $ref: "#/components/responses/OK"
 
+  /programs/classes/{class_id}/assignments/{assignment_id}/reply:
+    parameters:
+      - $ref: "#/components/parameters/classID"
+      - $ref: "#/components/parameters/assignmentID"
+    post:
+      tags:
+        - program
+      summary: post assignment's reply.
+      description: |
+        For posting assignment's reply
+      operationId: postClassAssignmentReply
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: "1234"
+                type:
+                  type: string
+                  example: "student | teacher"
+                text:
+                  type: string
+                  example: "text"
+      responses:
+        "200":
+          description: "OK: Post assignment's reply"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/OK"
   /programs/classes/{class_id}/assignments/{assignment_id}/submissions:
     parameters:
       - $ref: "#/components/parameters/classID"
@@ -3512,6 +3578,37 @@ components:
               profile_pic:
                 type: string
                 example: "https://pic.png"
+    replies:
+      type: object
+      description: Multiple thread's replies
+      properties:
+        replies:
+          type: array
+          items:
+            type: object
+            properties:
+              user:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    example: "1234"
+                  type:
+                    type: string
+                    example: "student | teacher"
+                  name:
+                    type: string
+                    example: "firstname lastname"
+                  profile_pic:
+                    type: string
+                    example: "https://pic.png"
+              reply_date:
+                type: integer
+                example: 13213123
+              text:
+                type: string
+                example: "text"
+
     threads:
       type: object
       description: Multiple class's threads
@@ -3542,6 +3639,8 @@ components:
               last_edit:
                 type: integer
                 example: 1213123
+              replies:
+                $ref: "#/components/schemas/replies"
     thread:
       type: object
       description: Single class's thread
@@ -3578,8 +3677,8 @@ components:
               src:
                 type: string
                 example: "https://example-img.png"
-
-                # TODO: add comments?
+        replies:
+          $ref: "#/components/schemas/replies"
 
     assignments:
       type: object
@@ -3623,6 +3722,8 @@ components:
               text:
                 type: string
                 example: "You must do this homework!!"
+              replies:
+                $ref: "#/components/schemas/replies"
     assignment:
       type: object
       properties:
@@ -3658,8 +3759,9 @@ components:
               src:
                 type: string
                 example: "https://example-img.png"
-        # TODO: Add comments
-    #
+        replies:
+          $ref: "#/components/schemas/replies"
+
     submissions:
       type: object
       properties:
