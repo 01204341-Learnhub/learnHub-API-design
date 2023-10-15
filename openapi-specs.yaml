@@ -3512,6 +3512,37 @@ components:
               profile_pic:
                 type: string
                 example: "https://pic.png"
+    replies:
+      type: object
+      description: Multiple thread's replies
+      properties:
+        replies:
+          type: array
+          items:
+            type: object
+            properties:
+              user:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    example: "1234"
+                  type:
+                    type: string
+                    example: "student | teacher"
+                  name:
+                    type: string
+                    example: "firstname lastname"
+                  profile_pic:
+                    type: string
+                    example: "https://pic.png"
+              reply_date:
+                type: integer
+                example: 13213123
+              text:
+                type: string
+                example: "text"
+
     threads:
       type: object
       description: Multiple class's threads
