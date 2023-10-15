@@ -1487,7 +1487,7 @@ paths:
                 user_id:
                   type: string
                   example: "1234"
-                type:
+                user_type:
                   type: string
                   example: "student | teacher"
                 text:
@@ -1663,7 +1663,7 @@ paths:
                 user_id:
                   type: string
                   example: "1234"
-                type:
+                user_type:
                   type: string
                   example: "student | teacher"
                 text:
