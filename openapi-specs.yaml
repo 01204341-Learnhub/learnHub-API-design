@@ -1831,6 +1831,14 @@ paths:
       tags:
         - program
       summary: List courses.
+      parameters:
+        - in: query
+          name: popular
+          description: Only return popular courses
+          schema:
+            type: boolean
+            example: true
+          required: false
       description: |
         For listing's courses.
       operationId: listCourses
