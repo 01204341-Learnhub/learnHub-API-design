@@ -1834,11 +1834,10 @@ paths:
       parameters:
         - in: query
           name: popular
-          description: Only return popular courses
+          description: Only return popular courses. Default value is false
           schema:
             type: boolean
             example: true
-          required: false
       description: |
         For listing's courses.
       operationId: listCourses
