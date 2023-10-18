@@ -1831,13 +1831,6 @@ paths:
       tags:
         - program
       summary: List courses.
-      parameters:
-        - in: query
-          name: popular
-          description: Only return popular courses. Default value is false
-          schema:
-            type: boolean
-            example: true
       description: |
         For listing's courses.
       operationId: listCourses
@@ -3899,6 +3892,9 @@ components:
               difficulty_level:
                 type: string
                 example: "hard"
+              monthly_sales:
+                type: integer
+                example: 20
     course:
       type: object
       description: A course info
